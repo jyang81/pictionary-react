@@ -32,12 +32,25 @@ class App extends React.Component {
       .then(json => this.setState({
         users: json
       }))
-      debugger
   }
 
   loginNewUser(username) {
-    debugger
-  }
+    console.log('is this working')
+       fetch(UserURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: username,
+          games_won: null, 
+          game_id: null
+        })
+      })
+      .then(res => res.json())
+      .then(json => console.log(json))
+
 
   render() {
     return (
