@@ -1,24 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import Header from './components/Header';
+import Canvas from './components/Canvas';
+import Chatbox from './components/Chatbox';
+import ColorPicker from './components/ColorPicker';
+import GameInfo from './containers/GameInfo';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Canvas />
+      <Chatbox />
+      <ColorPicker />
+      <GameInfo />
     </div>
   );
 }
