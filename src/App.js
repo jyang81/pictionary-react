@@ -17,12 +17,45 @@ class App extends React.Component {
 
   constructor() {
     super()
+    this.state = {
+      users: []
+    }
+    this.getUsers()
+    this.loginNewUser = this.loginNewUser.bind(this)
+  }
+
+  getUsers() {
+       fetch(UserURL, {
+        method: 'GET'
+      })
+      .then(res => res.json())
+      .then(json => this.setState({
+        users: json
+      }))
+  }
+
+  loginNewUser(username) {
+    console.log('is this working')
+       fetch(UserURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: username,
+          games_won: null, 
+          game_id: null
+        })
+      })
+      .then(res => res.json())
+      .then(json => console.log(json))
   }
 
   render() {
     return (
      <div className="App">
-      <Login/>
+      <Login users={this.state.users} loginNewUser={this.loginNewUser}/>
       {/* <Header />
       <Canvas />
       <Chatbox />
