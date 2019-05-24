@@ -10,9 +10,18 @@ import Login from './components/Login';
 import {BrowserRouter as Router, Route, Link, NavLink} from 'react-router-dom'
 import { withRouter } from "react-router";
 
-function App() {
-  return (
-    <div className="App">
+const GamesURL = 'http://localhost:3000/api/v1/games'
+const UserURL = 'http://localhost:3000/api/v1/users'
+
+class App extends React.Component {
+
+  constructor() {
+    super()
+  }
+
+  render() {
+    return (
+     <div className="App">
       <Login/>
       {/* <Header />
       <Canvas />
@@ -20,7 +29,79 @@ function App() {
       <ColorPicker />
       <GameInfo /> */}
     </div>
-  );
+    );
+  }
 }
 
 export default App;
+
+  // contructor methods??
+  // this.createUser('JonnyBoy')
+    // this.createGame()
+    // this.updateUser(12,6,)
+
+    //-----------------------------------------
+    // createUser(name) {
+    //   fetch(UserURL, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Accept': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //       name: name,
+    //       games_won: null, 
+    //       game_id: null
+    //     })
+    //   })
+    //   .then(res => res.json())
+    //   .then(json => this.updateUser(json))
+    // }
+
+    // updateUser(userId, gameId, gamesWon = null) {
+    //     fetch(UserURL + '/' + `${userId}`, {
+    //     method: 'PATCH',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Accept': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //       games_won: gamesWon,
+    //       game_id: gameId
+    //     })
+    //   })
+    //   .then(res => res.json())
+    //   .then(json => console.log('patch info',json))
+    // }
+
+    // createGame() {
+    //   fetch(GamesURL, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Accept': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+
+    //     })
+    //   })
+    //   .then(res => res.json())
+    //   .then(json => this.readGameId(json))
+    // }
+
+    // readGameId(game) {
+    //   console.log(game.id)
+    //   // this.removeGame(game.id)
+    // }
+
+    // removeGame(id) {
+    //   fetch(GamesURL + '/' + `${id}`, {
+    //     method: 'DELETE',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Accept': 'application/json'
+    //     }
+    //   })
+    //   .then(res => res.json())
+    //   .then(json => console.log(json))
+    // }
