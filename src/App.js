@@ -17,12 +17,32 @@ class App extends React.Component {
 
   constructor() {
     super()
+    this.state = {
+      users: []
+    }
+    this.getUsers()
+    this.loginNewUser = this.loginNewUser.bind(this)
+  }
+
+  getUsers() {
+       fetch(UserURL, {
+        method: 'GET'
+      })
+      .then(res => res.json())
+      .then(json => this.setState({
+        users: json
+      }))
+      debugger
+  }
+
+  loginNewUser(username) {
+    debugger
   }
 
   render() {
     return (
      <div className="App">
-      <Login/>
+      <Login users={this.state.users} loginNewUser={this.loginNewUser}/>
       {/* <Header />
       <Canvas />
       <Chatbox />
