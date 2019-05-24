@@ -6,10 +6,12 @@ import Canvas from './components/Canvas';
 import Chatbox from './components/Chatbox';
 import ColorPicker from './components/ColorPicker';
 import GameInfo from './containers/GameInfo';
+import Login from './components/Login';
+import {BrowserRouter as Router, Route, Link, NavLink} from 'react-router-dom'
+import { withRouter } from "react-router";
+
 const GamesURL = 'http://localhost:3000/api/v1/games'
 const UserURL = 'http://localhost:3000/api/v1/users'
-
-
 
 class App extends React.Component {
 
@@ -19,13 +21,14 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <Header />
-        <Canvas />
-        <Chatbox />
-        <ColorPicker />
-        <GameInfo />
-      </div>
+     <div className="App">
+      <Login/>
+      {/* <Header />
+      <Canvas />
+      <Chatbox />
+      <ColorPicker />
+      <GameInfo /> */}
+    </div>
     );
   }
 }
