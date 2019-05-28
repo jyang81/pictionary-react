@@ -6,9 +6,12 @@ import Canvas from './components/Canvas';
 import Chatbox from './components/Chatbox';
 import ColorPicker from './components/ColorPicker';
 import GameInfo from './containers/GameInfo';
+
+// import SketchPad from './components/SketchPad';
 import Login from './components/Login';
 import {BrowserRouter as Router, Route, Link, NavLink} from 'react-router-dom'
 import { withRouter } from "react-router";
+
 
 const GamesURL = 'http://localhost:3000/api/v1/games'
 const UserURL = 'http://localhost:3000/api/v1/users'
@@ -44,27 +47,27 @@ class App extends React.Component {
         },
         body: JSON.stringify({
           name: username,
-          games_won: null, 
+          games_won: null,
           game_id: null
         })
       })
       .then(res => res.json())
       .then(json => console.log(json))
 
-    }
+  }
 
 
   render() {
     return (
      <div className="App">
       <Login users={this.state.users} loginNewUser={this.loginNewUser}/>
-      {/* <Header />
+      <Header />
       <Canvas />
       <Chatbox />
       <ColorPicker />
-      <GameInfo /> */}
+      <GameInfo />
     </div>
-    );
+    )
   }
 }
 
@@ -85,7 +88,7 @@ export default App;
     //     },
     //     body: JSON.stringify({
     //       name: name,
-    //       games_won: null, 
+    //       games_won: null,
     //       game_id: null
     //     })
     //   })
