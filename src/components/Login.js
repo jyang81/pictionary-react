@@ -11,7 +11,6 @@ class Login extends React.Component {
 
     handleSubmit(ev) {
         ev.preventDefault()
-        debugger
         let username = this.username.current.value
         this.props.loginNewUser(username)
     }
