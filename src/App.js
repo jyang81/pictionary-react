@@ -4,7 +4,6 @@ import './App.css';
 import Header from './components/Header';
 import Canvas from './components/Canvas';
 import Chatbox from './components/Chatbox';
-import ColorPicker from './components/ColorPicker';
 import GameInfo from './containers/GameInfo';
 
 // import SketchPad from './components/SketchPad';
@@ -62,7 +61,6 @@ class App extends React.Component {
       <Header />
       <Canvas />
       <Chatbox />
-      <ColorPicker />
       <GameInfo />
     </div>
     )

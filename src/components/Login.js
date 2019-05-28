@@ -17,25 +17,25 @@ class Login extends React.Component {
     }
 
 
-    render() { 
-        return ( 
+    render() {
+        return (
             <div>
-                <form class="ui form" onSubmit={this.handleSubmit} >
-                    <div class="field">
+                <form className="ui form" onSubmit={this.handleSubmit} >
+                    <div className="field">
                         <label>Username </label>
                         <input type="text" name="username" placeholder="First Name" ref={this.username}/>
                     </div>
-                    <div class="field">
-                        <div class="ui checkbox">
-                        <input type="checkbox" checked='true' tabindex="0" class="hidden"/>
+                    <div className="field">
+                        <div className="ui checkbox">
+                        <input type="checkbox" checked={false} tabindex="0" class="hidden"/>
                         <label>I agree to the pay the creaters of this game one hundred billion gazilion dollhairs</label>
                         </div>
                     </div>
-                    <button class="ui button" type="submit">Submit</button>
+                    <button className="ui button" type="submit">Submit</button>
                 </form>
             </div>
          );
     }
 }
- 
+
 export default Login;

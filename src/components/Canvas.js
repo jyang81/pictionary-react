@@ -1,118 +1,144 @@
 import React, {Component} from 'react';
 
-// var isDrawing = false;
-// var lastX, lastY;
-// var ctx;
-
 class Canvas extends Component {
   constructor() {
     super()
     this.state = {
-      isDrawing: false
+      isDrawing: false,
+      curWidth: 1,
+      curColor: "black",
+      paths: []
     }
 
   }
 
-  handleMouseDown = (ev) => {
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    this.setState({
-      isDrawing: true
-    })
-    ctx.moveTo(ev.clientX, ev.clientY);
+  shouldComponentUpdate() {
+    return false
   }
 
-  handleMouseMove = (ev) => {
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    if (this.state.isDrawing) {
-      ctx.lineTo(ev.clientX, ev.clientY);
-      ctx.stroke();
+
+/////////////////////////// DRAWING FUNCTIONS //////////////////////////////////
+
+    // const canvas = document.getElementById('canvas');
+    // const ctx = canvas.getContext('2d');
+
+    handleMouseDown = (ev) => {
+      // console.log("mouse down")
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      this.setState({
+        isDrawing: true
+      })
+      ctx.lineWidth = this.state.curWidth
+      ctx.strokeStyle = this.state.curColor
+      ctx.moveTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop)
     }
-  }
 
-  handleMouseUp = (ev) => {
-    this.setState({
-      isDrawing: false
-    })
-  }
+    handleMouseMove = (ev) => {
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      if (this.state.isDrawing) {
+        ctx.lineWidth = this.state.curWidth
+        ctx.strokeStyle = this.state.curColor
+        ctx.lineTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop);
+        ctx.stroke()
+      }
+    }
 
-/////////////////////////// DRAWING FUNCTIONS /////////////////////////////////////
+    handleMouseUp = (ev) => {
+      // console.log("mouse up")
+      this.setState({
+        isDrawing: false
+      })
+    }
+
+    handleMouseLeave = (ev) => {
+      // console.log("mouse leave")
+      this.setState({
+        isDrawing: false
+      })
+    }
+
+    changeWidth = (ev) => {
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      console.log(ev.target.value)
+      this.setState({
+        curWidth: ev.target.value
+      })
+    }
+
+    changeColor = (ev) => {
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      console.log(ev.target.value);
+      this.setState({
+        curColor: ev.target.value
+      })
+    }
 
 
+    clearArea() {
+      console.log("cleared")
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      // ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.canvas.width = ctx.canvas.width;
+      // ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
 
-  // function InitThis() {
-  //     ctx = document.getElementById('canvas').getContext("2d");
+  // draw = (x, y, isDown) => {
+  //   let lastX, lastY;
+  //   const canvas = document.getElementById('canvas');
+  //   const ctx = canvas.getContext('2d');
   //
-  //     $('#canvas').mousedown(function (e) {
-  //         isDrawing = true;
-  //         Draw(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top, false);
-  //     });
-  //
-  //     $('#canvas').mousemove(function (e) {
-  //         if (isDrawing) {
-  //             Draw(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top, true);
-  //         }
-  //     });
-  //
-  //     $('#canvas').mouseup(function (e) {
-  //         isDrawing = false;
-  //     });
-  // 	    $('#canvas').mouseleave(function (e) {
-  //         isDrawing = false;
-  //     });
-  // }
-  //
-  // function Draw(x, y, isDown) {
   //     if (isDown) {
   //         ctx.beginPath();
-  //         ctx.strokeStyle = $('#selColor').val();
-  //         ctx.lineWidth = $('#selWidth').val();
+  //         ctx.strokeStyle = this.state.selColor;
+  //         ctx.lineWidth = this.state.selWidth;
   //         ctx.lineJoin = "round";
   //         ctx.moveTo(lastX, lastY);
   //         ctx.lineTo(x, y);
   //         ctx.closePath();
   //         ctx.stroke();
   //     }
-  //     lastX = x; lastY = y;
+  //     lastX = x;
+  //     lastY = y;
+  //     // console.log("x:", x, lastX);
+  //     // console.log("y:", y, lastY);
   // }
-  //
-  // function clearArea() {
-  //     // Use the identity matrix while clearing the canvas
-  //     ctx.setTransform(1, 0, 0, 1, 0, 0);
-  //     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  // }
-
-//////////////////////////////////////////////////////////////////////////////////
 
   render() {
+    console.log('rerender')
     return (
       <div>
         <canvas
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
           onMouseUp={this.handleMouseUp}
+          onMouseLeave={this.handleMouseLeave}
           id="canvas"
           width="800"
           height="600">
         </canvas>
         <br/>
-        <button onclick="javascript:clearArea();return false;">Clear Area</button>
-          Line width : <select id="selWidth">
-              <option value="1">1</option>
+        <button onClick={this.clearArea}>Clear Area</button>
+          Line width : <select id="selWidth" onChange={this.changeWidth}>
+              <option value="1" selected="selected">1</option>
               <option value="3">3</option>
               <option value="5">5</option>
               <option value="7">7</option>
-              <option value="9" selected="selected">9</option>
+              <option value="9">9</option>
               <option value="11">11</option>
           </select>
-          Color : <select id="selColor">
-              <option value="black">black</option>
-              <option value="blue" selected="selected">blue</option>
+          Color : <select id="selColor" onChange={this.changeColor}>
+              <option value="black" selected="selected">black</option>
+              <option value="blue">blue</option>
               <option value="red">red</option>
               <option value="green">green</option>
               <option value="yellow">yellow</option>
               <option value="gray">gray</option>
+              <option value="white">white</option>
           </select>
       </div>
     )
