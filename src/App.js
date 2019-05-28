@@ -15,31 +15,34 @@ import { withRouter } from "react-router";
 
 const GamesURL = 'http://localhost:3000/api/v1/games'
 const UserURL = 'http://localhost:3000/api/v1/users'
+const LoginURL = 'http://localhost:3000/api/v1/login'
 
 class App extends React.Component {
 
   constructor() {
     super()
     this.state = {
-      users: []
+      username : ''
     }
-    this.getUsers()
+    // this.getUsers()
     this.loginNewUser = this.loginNewUser.bind(this)
+    if (this.getToken()) {
+      this.getProfile()
+    }
   }
 
-  getUsers() {
-       fetch(UserURL, {
-        method: 'GET'
-      })
-      .then(res => res.json())
-      .then(json => this.setState({
-        users: json
-      }))
-  }
+  // getUsers() {
+  //      fetch(UserURL, {
+  //       method: 'GET'
+  //     })
+  //     .then(res => res.json())
+  //     .then(json => this.setState({
+  //       users: json
+  //     }))
+  // }
 
   loginNewUser(username) {
-    console.log('is this working')
-       fetch(UserURL, {
+       fetch(LoginURL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,15 +55,43 @@ class App extends React.Component {
         })
       })
       .then(res => res.json())
-      .then(json => console.log(json))
+      .then(json => {
+        console.log('login:', json)
+        if (json && json.jwt) {
+          this.saveToken(json.jwt)
+          this.getProfile()
+        }
+      })
 
+  }
+
+  getProfile = () => {
+    let token = this.getToken()
+    fetch('http://localhost:3000/api/v1/profile', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    .then(res => res.json())
+    .then(json => {
+      console.log('profile:', json)
+      this.setState({username: json.user.name})
+    })
+  }
+
+  saveToken(jwt) {
+    localStorage.setItem('jwt', jwt)
+  }
+
+  getToken(jwt) {
+    return localStorage.getItem('jwt')
   }
 
 
   render() {
     return (
      <div className="App">
-      <Login users={this.state.users} loginNewUser={this.loginNewUser}/>
+      {this.state.username === '' ? (<Login loginNewUser={this.loginNewUser}/>) : (<div>Logged In As:{this.state.username}</div>)  }
       <Header />
       <Canvas />
       <Chatbox />
