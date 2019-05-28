@@ -47,25 +47,25 @@ class App extends React.Component {
         },
         body: JSON.stringify({
           name: username,
-          games_won: null, 
+          games_won: null,
           game_id: null
         })
       })
       .then(res => res.json())
       .then(json => console.log(json))
-
+  }
 
   render() {
     return (
      <div className="App">
       <Login users={this.state.users} loginNewUser={this.loginNewUser}/>
-      {/* <Header />
+      <Header />
       <Canvas />
       <Chatbox />
       <ColorPicker />
-      <GameInfo /> */}
+      <GameInfo />
     </div>
-    );
+    )
   }
 }
 
@@ -86,7 +86,7 @@ export default App;
     //     },
     //     body: JSON.stringify({
     //       name: name,
-    //       games_won: null, 
+    //       games_won: null,
     //       game_id: null
     //     })
     //   })
