@@ -6,6 +6,7 @@ import Canvas from './components/Canvas';
 import Chatbox from './components/Chatbox';
 import ColorPicker from './components/ColorPicker';
 import GameInfo from './containers/GameInfo';
+// import SketchPad from './components/SketchPad';
 
 
 function App() {

@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+canvas {
+  border: 2px solid #ccc;
+  cursor: crosshair
+}
