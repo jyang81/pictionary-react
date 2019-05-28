@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "actioncable": "^5.2.3",
+    "actioncable-client-react": "^1.0.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
     "react-sketchpad": "0.0.3",
-    "react-router-dom": "^5.0.0",
     "semantic-ui": "^2.4.2",
     "semantic-ui-css": "^2.4.1"
   },

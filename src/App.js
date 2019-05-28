@@ -11,6 +11,7 @@ import GameInfo from './containers/GameInfo';
 import Login from './components/Login';
 import {BrowserRouter as Router, Route, Link, NavLink} from 'react-router-dom'
 import { withRouter } from "react-router";
+import { ActionCable } from 'actioncable-client-react'
 
 
 const GamesURL = 'http://localhost:3000/api/v1/games'
