@@ -24,26 +24,35 @@ class Canvas extends Component {
 
     handleMouseDown = (ev) => {
       // console.log("mouse down")
-      const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2d');
       this.setState({
         isDrawing: true
       })
-      ctx.lineWidth = this.state.curWidth
-      ctx.strokeStyle = this.state.curColor
-      ctx.moveTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop)
+      this.drawLine(ev)
     }
 
     handleMouseMove = (ev) => {
-      const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2d');
+
       if (this.state.isDrawing) {
-        ctx.lineWidth = this.state.curWidth
-        ctx.strokeStyle = this.state.curColor
-        ctx.lineTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop);
-        ctx.stroke()
+        this.drawLine(ev)
       }
     }
+
+    drawLine = (ev) => {
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      ctx.save();
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.lineWidth = this.state.curWidth;
+      ctx.strokeStyle = this.state.curColor;
+      // ctx.globalCompositeOperation = 'source-over';
+      ctx.moveTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop);
+      ctx.lineTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.restore();
+    };
 
     handleMouseUp = (ev) => {
       // console.log("mouse up")
@@ -60,8 +69,6 @@ class Canvas extends Component {
     }
 
     changeWidth = (ev) => {
-      const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2d');
       console.log(ev.target.value)
       this.setState({
         curWidth: ev.target.value
@@ -69,8 +76,6 @@ class Canvas extends Component {
     }
 
     changeColor = (ev) => {
-      const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2d');
       console.log(ev.target.value);
       this.setState({
         curColor: ev.target.value
@@ -82,9 +87,8 @@ class Canvas extends Component {
       console.log("cleared")
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
-      // ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.canvas.width = ctx.canvas.width;
-      // ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // ctx.canvas.width = ctx.canvas.width;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
   // draw = (x, y, isDown) => {
@@ -129,7 +133,7 @@ class Canvas extends Component {
               <option value="5">5</option>
               <option value="7">7</option>
               <option value="9">9</option>
-              <option value="11">11</option>
+              <option value="30">30</option>
           </select>
           Color : <select id="selColor" onChange={this.changeColor}>
               <option value="black" selected="selected">black</option>
@@ -137,6 +141,7 @@ class Canvas extends Component {
               <option value="red">red</option>
               <option value="green">green</option>
               <option value="yellow">yellow</option>
+              <option value="orange">orange</option>
               <option value="gray">gray</option>
               <option value="white">white</option>
           </select>
