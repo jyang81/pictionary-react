@@ -1,38 +1,36 @@
 import React, {Component} from 'react';
+import Cable from 'actioncable';
 
 class Canvas extends Component {
   constructor() {
     super()
     this.state = {
       isDrawing: false,
-      curWidth: 1,
+      curWidth: 3,
       curColor: "black",
       paths: []
     }
-
   }
 
-  shouldComponentUpdate() {
-    return false
-  }
-
-
-/////////////////////////// DRAWING FUNCTIONS //////////////////////////////////
-
-    // const canvas = document.getElementById('canvas');
-    // const ctx = canvas.getContext('2d');
+// =================== DRAWING FUNCTIONS =============================
 
     handleMouseDown = (ev) => {
       // console.log("mouse down")
       this.setState({
-        isDrawing: true
+        isDrawing: true,
+        paths: [...this.state.paths, this.makePath()]
       })
       this.drawLine(ev)
     }
 
     handleMouseMove = (ev) => {
-
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
       if (this.state.isDrawing) {
+        let x = ev.clientX - ctx.canvas.offsetLeft
+        let y = ev.clientY - ctx.canvas.offsetTop
+        // console.log(this.state.paths[this.state.paths.length - 1].coords.push(x,y));
+        this.state.paths[this.state.paths.length - 1].coords.push(x,y)
         this.drawLine(ev)
       }
     }
@@ -41,12 +39,12 @@ class Canvas extends Component {
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
       ctx.save();
-      ctx.lineJoin = 'round';
-      ctx.lineCap = 'round';
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
       ctx.beginPath();
       ctx.lineWidth = this.state.curWidth;
       ctx.strokeStyle = this.state.curColor;
-      // ctx.globalCompositeOperation = 'source-over';
+      ctx.globalCompositeOperation = 'source-over';
       ctx.moveTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop);
       ctx.lineTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop);
       ctx.closePath();
@@ -59,6 +57,7 @@ class Canvas extends Component {
       this.setState({
         isDrawing: false
       })
+      this.sendPaths()
     }
 
     handleMouseLeave = (ev) => {
@@ -66,6 +65,7 @@ class Canvas extends Component {
       this.setState({
         isDrawing: false
       })
+      this.sendPaths()
     }
 
     changeWidth = (ev) => {
@@ -82,38 +82,35 @@ class Canvas extends Component {
       })
     }
 
+// ========================================================================
 
-    clearArea() {
+    makePath = () => {
+      return {
+        color: this.state.curColor,
+        strokeWidth: this.state.curWidth,
+        coords: []
+      }
+    }
+
+    sendPaths = () => {
+      console.log("paths:", JSON.stringify(this.state.paths))
+
+    }
+
+
+
+    clearArea = () => {
       console.log("cleared")
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
       // ctx.canvas.width = ctx.canvas.width;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      this.setState({
+        paths: []
+      })
     }
 
-  // draw = (x, y, isDown) => {
-  //   let lastX, lastY;
-  //   const canvas = document.getElementById('canvas');
-  //   const ctx = canvas.getContext('2d');
-  //
-  //     if (isDown) {
-  //         ctx.beginPath();
-  //         ctx.strokeStyle = this.state.selColor;
-  //         ctx.lineWidth = this.state.selWidth;
-  //         ctx.lineJoin = "round";
-  //         ctx.moveTo(lastX, lastY);
-  //         ctx.lineTo(x, y);
-  //         ctx.closePath();
-  //         ctx.stroke();
-  //     }
-  //     lastX = x;
-  //     lastY = y;
-  //     // console.log("x:", x, lastX);
-  //     // console.log("y:", y, lastY);
-  // }
-
   render() {
-    console.log('rerender')
     return (
       <div>
         <canvas
@@ -128,11 +125,11 @@ class Canvas extends Component {
         <br/>
         <button onClick={this.clearArea}>Clear Area</button>
           Line width : <select id="selWidth" onChange={this.changeWidth}>
-              <option value="1" selected="selected">1</option>
-              <option value="3">3</option>
+              <option value="3" selected="selected">3</option>
               <option value="5">5</option>
               <option value="7">7</option>
-              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
               <option value="30">30</option>
           </select>
           Color : <select id="selColor" onChange={this.changeColor}>
