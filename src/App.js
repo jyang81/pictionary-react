@@ -3,10 +3,9 @@ import React from 'react';
 import './App.css';
 import Header from './components/Header';
 import Canvas from './components/Canvas';
+import CanvasDisplay from './components/CanvasDisplay';
 import Chatbox from './components/Chatbox';
 import GameInfo from './containers/GameInfo';
-
-// import SketchPad from './components/SketchPad';
 import Login from './components/Login';
 // import {BrowserRouter as Router, Route, Link, NavLink} from 'react-router-dom'
 // import { withRouter } from "react-router";
@@ -125,7 +124,9 @@ class App extends React.Component {
      <div className="App">
       {this.state.username === '' ? (<Login loginNewUser={this.loginNewUser}/>) : (<div>Logged In As:{this.state.username}</div>)  }
       <Header />
+      {/*if Drawer, display <Canvas/>, else display <CanvasDisplay/>*/}
       <Canvas />
+      <CanvasDisplay />
       <Chatbox username={this.state.username} userId={this.state.userId}/>
       <GameInfo />
     </div>
