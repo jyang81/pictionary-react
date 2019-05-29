@@ -142,8 +142,8 @@ class Canvas extends Component {
           onMouseUp={this.handleMouseUp}
           onMouseLeave={this.handleMouseLeave}
           id="canvas"
-          width="800"
-          height="600">
+          width="600"
+          height="500">
         </canvas>
         <br/>
         <button onClick={this.clearArea}>Clear Area</button>

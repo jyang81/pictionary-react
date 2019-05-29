@@ -22,7 +22,7 @@ class Login extends React.Component {
                 <form className="ui form" onSubmit={this.handleSubmit} >
                     <div className="field">
                         <label>Username </label>
-                        <input type="text" name="username" placeholder="First Name" ref={this.username}/>
+                        <input type="text" name="username" placeholder="First Name" required ref={this.username}/>
                     </div>
                     <div className="field">
                         <div className="ui checkbox">
