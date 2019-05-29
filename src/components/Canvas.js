@@ -14,75 +14,72 @@ class Canvas extends Component {
 
   /////////////////////////// DRAWING FUNCTIONS //////////////////////////////////
 
+  handleMouseDown = (ev) => {
+    // console.log("mouse down")
+    this.setState({
+      isDrawing: true,
+      paths: [...this.state.paths, this.makePath()]
+    })
+    this.drawLine(ev)
+  }
 
-    handleMouseDown = (ev) => {
-      // console.log("mouse down")
-
-      this.setState({
-        isDrawing: true,
-        paths: [...this.state.paths, this.makePath()]
-      })
+  handleMouseMove = (ev) => {
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    if (this.state.isDrawing) {
+      let x = ev.clientX - ctx.canvas.offsetLeft
+      let y = ev.clientY - ctx.canvas.offsetTop
+      // console.log(this.state.paths[this.state.paths.length - 1].coords.push(x,y));
+      this.state.paths[this.state.paths.length - 1].coords.push(x,y)
       this.drawLine(ev)
     }
+  }
 
-    handleMouseMove = (ev) => {
-      const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2d');
-      if (this.state.isDrawing) {
-        let x = ev.clientX - ctx.canvas.offsetLeft
-        let y = ev.clientY - ctx.canvas.offsetTop
-        // console.log(this.state.paths[this.state.paths.length - 1].coords.push(x,y));
-        this.state.paths[this.state.paths.length - 1].coords.push(x,y)
-        this.drawLine(ev)
-      }
-    }
+  drawLine = (ev) => {
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.save();
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.lineWidth = this.state.curWidth;
+    ctx.strokeStyle = this.state.curColor;
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.moveTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop);
+    ctx.lineTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.restore();
+  }
 
-    drawLine = (ev) => {
-      const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2d');
-      ctx.save();
-      ctx.lineJoin = "round";
-      ctx.lineCap = "round";
-      ctx.beginPath();
-      ctx.lineWidth = this.state.curWidth;
-      ctx.strokeStyle = this.state.curColor;
-      ctx.globalCompositeOperation = 'source-over';
-      ctx.moveTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop);
-      ctx.lineTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop);
-      ctx.closePath();
-      ctx.stroke();
-      ctx.restore();
-    };
+  handleMouseUp = (ev) => {
+    // console.log("mouse up")
+    this.setState({
+      isDrawing: false
+    })
+    this.sendPaths()
+  }
 
-    handleMouseUp = (ev) => {
-      // console.log("mouse up")
-      this.setState({
-        isDrawing: false
-      })
-      this.sendPaths()
-    }
+  handleMouseLeave = (ev) => {
+    // console.log("mouse leave")
+    this.setState({
+      isDrawing: false
+    })
+  }
 
-    handleMouseLeave = (ev) => {
-      // console.log("mouse leave")
-      this.setState({
-        isDrawing: false
-      })
-      this.sendPaths()
-    }
+  changeWidth = (ev) => {
+    console.log(ev.target.value)
+    this.setState({
+      curWidth: ev.target.value
+    })
+  }
 
-    changeWidth = (ev) => {
-      console.log(ev.target.value)
-      this.setState({
-        curWidth: ev.target.value
-      })
-    }
-
-    changeColor = (ev) => {
-      console.log(ev.target.value);
-      this.setState({
-        curColor: ev.target.value
-      })
-    }
+  changeColor = (ev) => {
+    console.log(ev.target.value);
+    this.setState({
+      curColor: ev.target.value
+    })
+  }
 
 // ========================================================================
 
