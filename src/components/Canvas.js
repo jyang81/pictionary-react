@@ -115,6 +115,7 @@ class Canvas extends Component {
   render() {
     return (
       <div>
+        <div>The word is {this.props.word}</div>
         <canvas
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
@@ -179,4 +180,3 @@ export default Canvas;
 //       });
 //     }
 //   });
-// }

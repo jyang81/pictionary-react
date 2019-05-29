@@ -23,12 +23,17 @@ class App extends React.Component {
     this.state = {
       username : '',
       userId: 0,
-      gameStatus: false,
+      gameAlreadyStarted: false,
+      gameJoined: false,
       gameId: 0,
-      drawer: ''
+      drawer: '',
+      word: ''
     }
     // this.getUsers()
     this.loginNewUser = this.loginNewUser.bind(this)
+    this.createGame = this.createGame.bind(this)
+    this.joinGame = this.joinGame.bind(this)
+
     if (this.getToken()) {
       this.getProfile()
     }
@@ -60,13 +65,15 @@ class App extends React.Component {
     }
 
     setGame(game) {
-      debugger
       if (game.length !== 0) {
         this.setState({
-          gameStatus: true,
-          gameId: game.id
+          gameAlreadyStarted: true,
+          gameId: game.id,
+          drawer: game.drawer_name,
+          word: game.word
         })
       }
+      console.log(game)
     }
 
   loginNewUser(username) {
@@ -118,15 +125,46 @@ class App extends React.Component {
     return localStorage.getItem('jwt')
   }
 
+  createGame() {
+    console.log('clicked')
+    fetch(GamesURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        drawer_id: this.state.userId,
+        drawer_name: this.state.username
+      })
+    })
+    .then(res => res.json())
+    .then(game => this.setState({
+      gameAlreadyStarted: true,
+      gameJoined: true,
+      gameId: game.id,
+      drawer: game.drawer_name,
+      word: game.word
+    }))
+    .then(_ => console.log(this.state))
+}
+
+  joinGame() {
+    return null
+  }
+
 
   render() {
     return (
      <div className="App">
       {this.state.username === '' ? (<Login loginNewUser={this.loginNewUser}/>) : (<div>Logged In As:{this.state.username}</div>)  }
       <Header />
-      {/*if Drawer, display <Canvas/>, else display <CanvasDisplay/>*/}
-      <Canvas />
-      <CanvasDisplay />
+      {this.state.gameAlreadyStarted ? 
+      (<button onClick={() => this.joinGame()} className="ui button">Join Game</button>) : 
+      (<button onClick={() => this.createGame()} className="ui button">Create Game</button>)  }
+      {this.state.drawer === this.state.username ? 
+      (<Canvas word={this.state.word}/>) :
+      (<CanvasDisplay />)}
       <Chatbox username={this.state.username} userId={this.state.userId}/>
       <GameInfo />
     </div>
@@ -137,6 +175,7 @@ class App extends React.Component {
 export default App;
 
   // contructor methods??
+
   // this.createUser('JonnyBoy')
     // this.createGame()
     // this.updateUser(12,6,)
