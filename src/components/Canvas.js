@@ -14,75 +14,73 @@ class Canvas extends Component {
 
   /////////////////////////// DRAWING FUNCTIONS //////////////////////////////////
 
+  handleMouseDown = (ev) => {
+    // console.log("mouse down")
+    this.setState({
+      isDrawing: true,
+      paths: [...this.state.paths, this.makePath()]
+    })
+    this.drawLine(ev)
+  }
 
-    handleMouseDown = (ev) => {
-      // console.log("mouse down")
-
-      this.setState({
-        isDrawing: true,
-        paths: [...this.state.paths, this.makePath()]
-      })
+  handleMouseMove = (ev) => {
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    if (this.state.isDrawing) {
+      let x = ev.clientX - ctx.canvas.offsetLeft
+      let y = ev.clientY - ctx.canvas.offsetTop
+      let p = this.state.paths
+      p[p.length - 1].coordinates.push(x,y)
       this.drawLine(ev)
     }
+  }
 
-    handleMouseMove = (ev) => {
-      const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2d');
-      if (this.state.isDrawing) {
-        let x = ev.clientX - ctx.canvas.offsetLeft
-        let y = ev.clientY - ctx.canvas.offsetTop
-        // console.log(this.state.paths[this.state.paths.length - 1].coords.push(x,y));
-        this.state.paths[this.state.paths.length - 1].coords.push(x,y)
-        this.drawLine(ev)
-      }
-    }
+  drawLine = (ev) => {
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.save();
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.lineWidth = this.state.curWidth;
+    ctx.strokeStyle = this.state.curColor;
+    ctx.moveTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop);
+    ctx.lineTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.restore();
+  }
 
-    drawLine = (ev) => {
-      const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2d');
-      ctx.save();
-      ctx.lineJoin = "round";
-      ctx.lineCap = "round";
-      ctx.beginPath();
-      ctx.lineWidth = this.state.curWidth;
-      ctx.strokeStyle = this.state.curColor;
-      ctx.globalCompositeOperation = 'source-over';
-      ctx.moveTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop);
-      ctx.lineTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop);
-      ctx.closePath();
-      ctx.stroke();
-      ctx.restore();
-    };
+  handleMouseUp = (ev) => {
+    // console.log("mouse up")
+    let p = this.state.paths
+    this.setState({
+      isDrawing: false
+    })
+    // console.log(p[p.length - 1].color, p[p.length - 1].strokeWidth, p[p.length - 1].coordinates)
+    this.paths.create(p[p.length - 1].color, p[p.length - 1].strokeWidth, p[p.length - 1].coordinates)
+  }
 
-    handleMouseUp = (ev) => {
-      // console.log("mouse up")
-      this.setState({
-        isDrawing: false
-      })
-      this.sendPaths()
-    }
+  handleMouseLeave = (ev) => {
+    // console.log("mouse leave")
+    this.setState({
+      isDrawing: false
+    })
+  }
 
-    handleMouseLeave = (ev) => {
-      // console.log("mouse leave")
-      this.setState({
-        isDrawing: false
-      })
-      this.sendPaths()
-    }
+  changeWidth = (ev) => {
+    console.log(ev.target.value)
+    this.setState({
+      curWidth: ev.target.value
+    })
+  }
 
-    changeWidth = (ev) => {
-      console.log(ev.target.value)
-      this.setState({
-        curWidth: ev.target.value
-      })
-    }
-
-    changeColor = (ev) => {
-      console.log(ev.target.value);
-      this.setState({
-        curColor: ev.target.value
-      })
-    }
+  changeColor = (ev) => {
+    console.log(ev.target.value);
+    this.setState({
+      curColor: ev.target.value
+    })
+  }
 
 // ========================================================================
 
@@ -90,16 +88,9 @@ class Canvas extends Component {
       return {
         color: this.state.curColor,
         strokeWidth: this.state.curWidth,
-        coords: []
+        coordinates: []
       }
     }
-
-    sendPaths = () => {
-      console.log("paths:", JSON.stringify(this.state.paths))
-
-    }
-
-
 
     clearArea = () => {
       console.log("cleared")
@@ -110,6 +101,36 @@ class Canvas extends Component {
       this.setState({
         paths: []
       })
+      const c2 = document.getElementById('canvas-display').getContext('2d')
+      c2.clearRect(0, 0, canvas.width, canvas.height)
+    }
+
+    componentWillMount() {
+      this.createSocket()
+      console.log('created socket')
+    }
+
+    createSocket() {
+      let cable = Cable.createConsumer('ws://localhost:3000/cable');
+      this.paths = cable.subscriptions.create({
+        channel: 'CanvasChannel'
+      }, {
+        connected: () => {},
+        // received: (data) => {
+          // let paths = this.state.paths;
+          // paths.push(data);
+          // debugger
+          // this.setState({ paths });
+        // },
+        create: function(color, strokeWidth, coordinates) {
+
+          this.perform('create', {
+            color: color,
+            strokeWidth: strokeWidth,
+            coordinates: coordinates
+          });
+        }
+      });
     }
 
   render() {
@@ -153,30 +174,3 @@ class Canvas extends Component {
 
 export default Canvas;
 
-
-// componentWillMount() {
-//   this.createSocket()
-//   console.log('created socket')
-// }
-
-// createSocket() {
-//   let cable = Cable.createConsumer('ws://localhost:3000/cable');
-//   this.lines = cable.subscriptions.create({
-//     channel: 'CanvasChannel'
-//   }, {
-//     connected: () => {},
-//     received: (data) => {
-//       let lines = this.state.JonTestLinesRecieved;
-//       lines.push(data);
-//       debugger
-//       this.setState({ JonTestLinesRecieved : lines });
-//     },
-//     create: function(color, strokeWidth, coordinates) {
-
-//       this.perform('create', {
-//         color: color,
-//         strokeWidth: strokeWidth,
-//         coordinates: coordinates
-//       });
-//     }
-//   });
