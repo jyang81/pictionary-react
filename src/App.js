@@ -23,7 +23,8 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      username : ''
+      username : '',
+      userId : 0
     }
     // this.getUsers()
     this.loginNewUser = this.loginNewUser.bind(this)
@@ -76,7 +77,10 @@ class App extends React.Component {
     .then(res => res.json())
     .then(json => {
       console.log('profile:', json)
-      this.setState({username: json.user.name})
+      this.setState({
+        username: json.user.name,
+        userId: json.user.id
+      })
     })
   }
 
@@ -95,7 +99,7 @@ class App extends React.Component {
       {this.state.username === '' ? (<Login loginNewUser={this.loginNewUser}/>) : (<div>Logged In As:{this.state.username}</div>)  }
       <Header />
       <Canvas />
-      <Chatbox />
+      <Chatbox username={this.state.username} userId={this.state.userId}/>
       <ColorPicker />
       <GameInfo />
     </div>
