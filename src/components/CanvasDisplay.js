@@ -15,24 +15,24 @@ class CanvasDisplay extends Component {
     drawLine = (paths) => {
       const canvas = document.getElementById('canvas-display');
       const ctx = canvas.getContext('2d');
-      this.ctx.save();
-      this.ctx.lineJoin = "round";
-      this.ctx.lineCap = "round";
+      ctx.save();
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
 
-      this.ctx.globalCompositeOperation = 'source-over';
+      ctx.globalCompositeOperation = 'source-over';
       this.state.paths.forEach(path => {
-        this.ctx.lineWidth = path.strokeWidth;
-        this.ctx.strokeStyle = path.color;
-        this.ctx.beginPath();
+        ctx.lineWidth = path.strokeWidth;
+        ctx.strokeStyle = path.color;
+        ctx.beginPath();
         const c = path.coords;
-        this.ctx.moveTo(c[0], c[1]);
+        ctx.moveTo(c[0], c[1]);
         for (let i = 2; i < c.length; i += 2) {
-          this.ctx.lineTo(c[i], c[i+1]);
+          ctx.lineTo(c[i], c[i+1]);
         }
-        this.ctx.closePath();
-        this.ctx.stroke();
+        ctx.closePath();
+        ctx.stroke();
       })
-      this.ctx.restore();
+      ctx.restore();
     };
 
 
