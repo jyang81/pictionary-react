@@ -56,11 +56,11 @@ class CanvasDisplay extends Component {
       }, {
         connected: () => {},
         received: (data) => {
-          let paths = this.state.paths;
-          paths.push(data);
+          // let paths = this.state.paths;
+          // paths.push(data);
           this.drawLine(data)
           // debugger
-          this.setState({ paths })
+          // this.setState({ paths })
         },
         create: function(color, strokeWidth, coordinates) {
 
@@ -80,8 +80,8 @@ class CanvasDisplay extends Component {
 
         <canvas
           id="canvas-display"
-          width="800"
-          height="600">
+          width="600"
+          height="500">
         </canvas>
 
       </div>
