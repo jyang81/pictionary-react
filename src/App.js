@@ -8,9 +8,9 @@ import GameInfo from './containers/GameInfo';
 
 // import SketchPad from './components/SketchPad';
 import Login from './components/Login';
-import {BrowserRouter as Router, Route, Link, NavLink} from 'react-router-dom'
-import { withRouter } from "react-router";
-import { ActionCable } from 'actioncable-client-react'
+// import {BrowserRouter as Router, Route, Link, NavLink} from 'react-router-dom'
+// import { withRouter } from "react-router";
+
 
 
 const GamesURL = 'http://localhost:3000/api/v1/games'
@@ -22,13 +22,18 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      username : ''
+      username : '',
+      userId: 0,
+      gameStatus: false,
+      gameId: 0,
+      drawer: ''
     }
     // this.getUsers()
     this.loginNewUser = this.loginNewUser.bind(this)
     if (this.getToken()) {
       this.getProfile()
     }
+    this.getGameStatus()
   }
 
   // getUsers() {
@@ -40,6 +45,30 @@ class App extends React.Component {
   //       users: json
   //     }))
   // }
+
+  getGameStatus() {
+    let token = this.getToken()
+      fetch(GamesURL, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+      .then(res => res.json())
+      .then(json => this.setGame(json))
+    }
+
+    setGame(game) {
+      debugger
+      if (game.length !== 0) {
+        this.setState({
+          gameStatus: true,
+          gameId: game.id
+        })
+      }
+    }
 
   loginNewUser(username) {
        fetch(LoginURL, {
@@ -75,7 +104,10 @@ class App extends React.Component {
     .then(res => res.json())
     .then(json => {
       console.log('profile:', json)
-      this.setState({username: json.user.name})
+      this.setState({
+        username: json.user.name,
+        userId: json.user.id
+      })
     })
   }
 
@@ -94,7 +126,7 @@ class App extends React.Component {
       {this.state.username === '' ? (<Login loginNewUser={this.loginNewUser}/>) : (<div>Logged In As:{this.state.username}</div>)  }
       <Header />
       <Canvas />
-      <Chatbox />
+      <Chatbox username={this.state.username} userId={this.state.userId}/>
       <GameInfo />
     </div>
     )

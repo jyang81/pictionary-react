@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Cable from 'actioncable';
 
 class Canvas extends Component {
   constructor() {
@@ -9,21 +10,13 @@ class Canvas extends Component {
       curColor: "black",
       paths: []
     }
-
   }
 
-  shouldComponentUpdate() {
-    return false
-  }
-
-
-/////////////////////////// DRAWING FUNCTIONS //////////////////////////////////
-
-    // const canvas = document.getElementById('canvas');
-    // const ctx = canvas.getContext('2d');
+  /////////////////////////// DRAWING FUNCTIONS //////////////////////////////////
 
     handleMouseDown = (ev) => {
       // console.log("mouse down")
+
       this.setState({
         isDrawing: true
       })
@@ -152,3 +145,32 @@ class Canvas extends Component {
 }
 
 export default Canvas;
+
+
+// componentWillMount() {
+//   this.createSocket()
+//   console.log('created socket')
+// }
+
+// createSocket() {
+//   let cable = Cable.createConsumer('ws://localhost:3000/cable');
+//   this.lines = cable.subscriptions.create({
+//     channel: 'CanvasChannel'
+//   }, {
+//     connected: () => {},
+//     received: (data) => {
+//       let lines = this.state.JonTestLinesRecieved;
+//       lines.push(data);
+//       debugger
+//       this.setState({ JonTestLinesRecieved : lines });
+//     },
+//     create: function(color, strokeWidth, coordinates) {
+
+//       this.perform('create', {
+//         color: color,
+//         strokeWidth: strokeWidth,
+//         coordinates: coordinates
+//       });
+//     }
+//   });
+// }

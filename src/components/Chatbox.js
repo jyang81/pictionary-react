@@ -31,9 +31,12 @@ class Chatbox extends Component {
         chatLogs.push(data);
         this.setState({ chatLogs: chatLogs });
       },
-      create: function(chatContent) {
+      create: function(chatContent, id, username) {
+
         this.perform('create', {
-          content: chatContent
+          content: chatContent,
+          user_id: id,
+          user_name: username
         });
       }
     });
@@ -41,7 +44,11 @@ class Chatbox extends Component {
 
   handleSendEvent(ev) {
     ev.preventDefault();
-    this.chats.create(this.state.currentChatMessage);
+    this.chats.create(
+      this.state.currentChatMessage, 
+      this.props.userId,
+      this.props.username
+      );
     this.setState({
       currentChatMessage: ''
     });
@@ -51,8 +58,8 @@ class Chatbox extends Component {
     return this.state.chatLogs.map((el) => {
       return (
         <li key={`chat_${el.id}`}>
-          <span className='chat-message'>{ el.content }</span>
-          <span className='chat-created-at'>{ el.created_at }</span>
+          <span className='chat-message'>{ el.user_name }{': '}</span>
+          <span className='chat-created-at'>{ el.content }</span>
         </li>
       );
     });
