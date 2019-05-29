@@ -29,8 +29,8 @@ class Canvas extends Component {
     if (this.state.isDrawing) {
       let x = ev.clientX - ctx.canvas.offsetLeft
       let y = ev.clientY - ctx.canvas.offsetTop
-      // console.log(this.state.paths[this.state.paths.length - 1].coords.push(x,y));
-      this.state.paths[this.state.paths.length - 1].coords.push(x,y)
+      let p = this.state.paths
+      p[p.length - 1].coordinates.push(x,y)
       this.drawLine(ev)
     }
   }
@@ -44,7 +44,6 @@ class Canvas extends Component {
     ctx.beginPath();
     ctx.lineWidth = this.state.curWidth;
     ctx.strokeStyle = this.state.curColor;
-    ctx.globalCompositeOperation = 'source-over';
     ctx.moveTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop);
     ctx.lineTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop);
     ctx.closePath();
@@ -54,10 +53,12 @@ class Canvas extends Component {
 
   handleMouseUp = (ev) => {
     // console.log("mouse up")
+    let p = this.state.paths
     this.setState({
       isDrawing: false
     })
-    this.sendPaths()
+    // console.log(p[p.length - 1].color, p[p.length - 1].strokeWidth, p[p.length - 1].coordinates)
+    this.paths.create(p[p.length - 1].color, p[p.length - 1].strokeWidth, p[p.length - 1].coordinates)
   }
 
   handleMouseLeave = (ev) => {
@@ -87,16 +88,9 @@ class Canvas extends Component {
       return {
         color: this.state.curColor,
         strokeWidth: this.state.curWidth,
-        coords: []
+        coordinates: []
       }
     }
-
-    sendPaths = () => {
-      console.log("paths:", JSON.stringify(this.state.paths))
-
-    }
-
-
 
     clearArea = () => {
       console.log("cleared")
@@ -107,6 +101,36 @@ class Canvas extends Component {
       this.setState({
         paths: []
       })
+      const c2 = document.getElementById('canvas-display').getContext('2d')
+      c2.clearRect(0, 0, canvas.width, canvas.height)
+    }
+
+    componentWillMount() {
+      this.createSocket()
+      console.log('created socket')
+    }
+
+    createSocket() {
+      let cable = Cable.createConsumer('ws://localhost:3000/cable');
+      this.paths = cable.subscriptions.create({
+        channel: 'CanvasChannel'
+      }, {
+        connected: () => {},
+        // received: (data) => {
+          // let paths = this.state.paths;
+          // paths.push(data);
+          // debugger
+          // this.setState({ paths });
+        // },
+        create: function(color, strokeWidth, coordinates) {
+
+          this.perform('create', {
+            color: color,
+            strokeWidth: strokeWidth,
+            coordinates: coordinates
+          });
+        }
+      });
     }
 
   render() {
@@ -148,32 +172,3 @@ class Canvas extends Component {
 }
 
 export default Canvas;
-
-
-// componentWillMount() {
-//   this.createSocket()
-//   console.log('created socket')
-// }
-
-// createSocket() {
-//   let cable = Cable.createConsumer('ws://localhost:3000/cable');
-//   this.lines = cable.subscriptions.create({
-//     channel: 'CanvasChannel'
-//   }, {
-//     connected: () => {},
-//     received: (data) => {
-//       let lines = this.state.JonTestLinesRecieved;
-//       lines.push(data);
-//       debugger
-//       this.setState({ JonTestLinesRecieved : lines });
-//     },
-//     create: function(color, strokeWidth, coordinates) {
-
-//       this.perform('create', {
-//         color: color,
-//         strokeWidth: strokeWidth,
-//         coordinates: coordinates
-//       });
-//     }
-//   });
-// }

@@ -60,7 +60,7 @@ class App extends React.Component {
     }
 
     setGame(game) {
-      debugger
+      // debugger
       if (game.length !== 0) {
         this.setState({
           gameStatus: true,
