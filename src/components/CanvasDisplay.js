@@ -14,7 +14,7 @@ class CanvasDisplay extends Component {
 
     drawLine = (data) => {
 
-      const canvas = document.getElementById('canvas-display');
+      const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
       ctx.save();
       ctx.lineJoin = "round";
@@ -93,7 +93,7 @@ class CanvasDisplay extends Component {
       <div>
 
         <canvas
-          id="canvas-display"
+          id="canvas"
           width="600"
           height="500">
         </canvas>
