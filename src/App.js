@@ -39,7 +39,7 @@ class App extends React.Component {
     //   this.getProfile()
     // }
     this.removeToken()
-    
+
 
   }
 
