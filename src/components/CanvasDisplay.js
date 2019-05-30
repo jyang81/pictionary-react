@@ -32,17 +32,6 @@ class CanvasDisplay extends Component {
       ctx.restore();
     };
 
-    clearArea = () => {
-      console.log("cleared")
-      const canvas = document.getElementById('canvas-display');
-      const ctx = canvas.getContext('2d');
-      // ctx.canvas.width = ctx.canvas.width;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      this.setState({
-        paths: []
-      })
-    }
-
 
 
 // ========================================================================
@@ -69,12 +58,7 @@ class CanvasDisplay extends Component {
         received: (data) => {
           // let paths = this.state.paths;
           // paths.push(data);
-          if (data.clear) {
-            this.clearArea()
-          }
-          else {
           this.drawLine(data)
-          }
           // this.setState({ paths })
         },
         create: function(color, strokeWidth, coordinates) {
