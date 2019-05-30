@@ -29,7 +29,7 @@ class App extends React.Component {
       drawer: '',
       word: ''
     }
-    // this.getUsers()
+
     this.loginNewUser = this.loginNewUser.bind(this)
     this.createGame = this.createGame.bind(this)
     this.joinGame = this.joinGame.bind(this)
@@ -38,18 +38,23 @@ class App extends React.Component {
     //   this.getProfile()
     // }
     this.removeToken()
+    
 
   }
 
-  // getUsers() {
-  //      fetch(UserURL, {
-  //       method: 'GET'
-  //     })
-  //     .then(res => res.json())
-  //     .then(json => this.setState({
-  //       users: json
-  //     }))
-  // }
+  getUsers() {
+    let token = this.getToken()
+       fetch(UserURL, {
+        method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + token
+          }
+      })
+      .then(res => res.json())
+      .then(json => console.log('users:', json))
+  }
 
 
   getGameStatus() {
@@ -101,6 +106,7 @@ class App extends React.Component {
         }
       })
       .then(_ => this.getGameStatus())
+      .then(_ => this.getUsers())
 
   }
 
