@@ -26,7 +26,7 @@ class Login extends React.Component {
                     </div>
                     <div className="field">
                         <div className="ui checkbox">
-                        <input type="checkbox" checked={false} tabindex="0" class="hidden"/>
+                        <input type="checkbox" checked={true} tabindex="0" class="hidden"/>
                         <label>I agree to the pay the creaters of this game one hundred billion gazilion dollhairs</label>
                         </div>
                     </div>
