@@ -73,17 +73,17 @@ class Chatbox extends Component {
         <ul className='chat-logs'>
         {this.renderChatLog()}
         </ul>
+        <form onSubmit={(ev) =>  this.handleSendEvent(ev)}>
         <input
           value={this.state.currentChatMessage}
           onChange={(ev) => this.updateCurrentChatMessage(ev)}
           type='text'
           placeholder='Enter your message...'
           className='chat-input'/>
-        <button 
-        onClick={(ev) =>  this.handleSendEvent(ev)}
-        className='send'>
+        <button className='ui button'>
           Send
         </button>
+        </form>
       </div>
     )
   }

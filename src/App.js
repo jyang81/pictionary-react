@@ -27,7 +27,8 @@ class App extends React.Component {
       gameJoined: false,
       gameId: 0,
       drawer: '',
-      word: ''
+      word: '',
+      gamesWon: 0
     }
 
     this.loginNewUser = this.loginNewUser.bind(this)
@@ -122,7 +123,8 @@ class App extends React.Component {
       console.log('profile:', json)
       this.setState({
         username: json.user.name,
-        userId: json.user.id
+        userId: json.user.id,
+        gamesWon: json.user.games_won
       })
     })
   }
@@ -171,15 +173,13 @@ class App extends React.Component {
     })
   }
 
-  renderCanvas() {
-    if (this.state.gameJoined) {
-      if (this.state.drawer === this.state.username) {
-        return <Canvas word={this.state.word}/>
-      }
-      else {
-      return <CanvasDisplay />
-      }
-    }
+  renderLogin() {
+    if (this.state.username === '')  {
+      return <Login loginNewUser={this.loginNewUser}/>
+     }  
+     else {
+      return <div>Logged In As: {this.state.username} Games Won: {this.state.gamesWon}</div>
+     }
   }
 
   renderJoinButtons() {
@@ -193,15 +193,32 @@ class App extends React.Component {
     }
   }
 
+  renderCanvas() {
+    if (this.state.gameJoined) {
+      if (this.state.drawer === this.state.username) {
+        return <Canvas word={this.state.word}/>
+      }
+      else {
+      return <CanvasDisplay />
+      }
+    }
+  }
+  
+  renderChatBox() {
+    if (this.state.username !== '') {
+      return <Chatbox username={this.state.username} userId={this.state.userId}/>
+    }
+  }
+
 
   render() {
     return (
      <div className="App">
-      {this.state.username === '' ? (<Login loginNewUser={this.loginNewUser}/>) : (<div>Logged In As:{this.state.username}</div>)  }
       <Header />
+      {this.renderLogin()}
       {this.renderJoinButtons() }
       {this.renderCanvas()}
-      <Chatbox username={this.state.username} userId={this.state.userId}/>
+      {this.renderChatBox()}
       <GameInfo />
     </div>
     )
