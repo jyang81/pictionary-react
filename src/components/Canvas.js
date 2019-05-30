@@ -101,8 +101,6 @@ class Canvas extends Component {
       this.setState({
         paths: []
       })
-      const c2 = document.getElementById('canvas-display').getContext('2d')
-      c2.clearRect(0, 0, canvas.width, canvas.height)
     }
 
     componentWillMount() {
@@ -173,4 +171,3 @@ class Canvas extends Component {
 }
 
 export default Canvas;
-

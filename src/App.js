@@ -29,26 +29,33 @@ class App extends React.Component {
       drawer: '',
       word: ''
     }
-    // this.getUsers()
+
     this.loginNewUser = this.loginNewUser.bind(this)
     this.createGame = this.createGame.bind(this)
     this.joinGame = this.joinGame.bind(this)
 
-    if (this.getToken()) {
-      this.getProfile()
-    }
-    this.getGameStatus()
+    // if (this.getToken()) {
+    //   this.getProfile()
+    // }
+    this.removeToken()
+
+
   }
 
-  // getUsers() {
-  //      fetch(UserURL, {
-  //       method: 'GET'
-  //     })
-  //     .then(res => res.json())
-  //     .then(json => this.setState({
-  //       users: json
-  //     }))
-  // }
+  getUsers() {
+    let token = this.getToken()
+       fetch(UserURL, {
+        method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + token
+          }
+      })
+      .then(res => res.json())
+      .then(json => console.log('users:', json))
+  }
+
 
   getGameStatus() {
     let token = this.getToken()
@@ -65,7 +72,7 @@ class App extends React.Component {
     }
 
     setGame(game) {
-      if (game.length !== 0) {
+      if (game[0]) {
         this.setState({
           gameAlreadyStarted: true,
           gameId: game.id,
@@ -73,7 +80,8 @@ class App extends React.Component {
           word: game.word
         })
       }
-      console.log(game)
+      console.log('here is game:',game)
+      console.log('here is state:',this.state)
     }
 
   loginNewUser(username) {
@@ -97,6 +105,8 @@ class App extends React.Component {
           this.getProfile()
         }
       })
+      .then(_ => this.getGameStatus())
+      .then(_ => this.getUsers())
 
   }
 
@@ -125,13 +135,19 @@ class App extends React.Component {
     return localStorage.getItem('jwt')
   }
 
+  removeToken() {
+    localStorage.removeItem('jwt')
+  }
+
   createGame() {
     console.log('clicked')
+    let token = this.getToken()
     fetch(GamesURL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + token
       },
       body: JSON.stringify({
         drawer_id: this.state.userId,
@@ -146,11 +162,35 @@ class App extends React.Component {
       drawer: game.drawer_name,
       word: game.word
     }))
-    .then(_ => console.log(this.state))
+    .then(_ => console.log('here is the state after creation:',this.state))
 }
 
   joinGame() {
-    return null
+    this.setState({
+      gameJoined: true
+    })
+  }
+
+  renderCanvas() {
+    if (this.state.gameJoined) {
+      if (this.state.drawer === this.state.username) {
+        return <Canvas word={this.state.word}/>
+      }
+      else {
+      return <CanvasDisplay />
+      }
+    }
+  }
+
+  renderJoinButtons() {
+    if (this.state.username !== '') {
+      if (this.state.gameAlreadyStarted) {
+        return <button onClick={() => this.joinGame()} className="ui button">Join Game</button>
+      }
+      else {
+        return <button onClick={() => this.createGame()} className="ui button">Create Game</button>
+      }
+    }
   }
 
 
@@ -159,16 +199,8 @@ class App extends React.Component {
      <div className="App">
       {this.state.username === '' ? (<Login loginNewUser={this.loginNewUser}/>) : (<div>Logged In As:{this.state.username}</div>)  }
       <Header />
-      {this.state.gameAlreadyStarted ?
-      (<button onClick={() => this.joinGame()} className="ui button">Join Game</button>) :
-      (<button onClick={() => this.createGame()} className="ui button">Create Game</button>)  }
-      {this.state.drawer === this.state.username ?
-      <>
-      <Canvas word={this.state.word} />
-      <div className="hidden"><CanvasDisplay /></div>
-      </>
-      :
-      <CanvasDisplay />}
+      {this.renderJoinButtons() }
+      {this.renderCanvas()}
       <Chatbox username={this.state.username} userId={this.state.userId}/>
       <GameInfo />
     </div>
