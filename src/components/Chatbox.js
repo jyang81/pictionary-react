@@ -46,7 +46,7 @@ class Chatbox extends Component {
   handleSendEvent(ev) {
     ev.preventDefault();
     this.chats.create(
-      this.state.currentChatMessage, 
+      this.state.currentChatMessage,
       this.props.userId,
       this.props.username
       );
@@ -71,10 +71,11 @@ class Chatbox extends Component {
   renderChatLog() {
     return this.state.chatLogs.map((el) => {
       return (
-        <li key={`chat_${el.id}`}>
-          <span className='chat-message'>{ el.user_name }{': '}</span>
-          <span className='chat-created-at'>{ el.content }</span>
-        </li>
+        <div className="ui message" key={`chat_${el.id}`}>
+          <div class="header">
+            { el.user_name }: { el.content }
+          </div>
+        </div>
       );
     });
   }
@@ -82,20 +83,23 @@ class Chatbox extends Component {
 
   render() {
     return (
-      <div className='stage'>
-        <h1>Chat</h1>
-        <ul className='chat-logs'>
-        {this.renderChatLog()}
-        </ul>
-        <form onSubmit={(ev) =>  this.handleSendEvent(ev)}>
-        <input
-          value={this.state.currentChatMessage}
-          onChange={(ev) => this.updateCurrentChatMessage(ev)}
-          type='text'
-          placeholder='Enter your message...'
-          className='chat-input'/>
-        <button className='ui button'>
-          Send
+      <div >
+        <h3>Messages</h3>
+        <div className="height-600">
+          {this.renderChatLog()}
+        </div>
+        <br />
+        <form onSubmit={(ev) => this.handleSendEvent(ev)}>
+        <div className="ui input">
+          <input
+            value={this.state.currentChatMessage}
+            onChange={(ev) => this.updateCurrentChatMessage(ev)}
+            type='text'
+            placeholder='Enter your guess'
+          />
+        </div> &nbsp;
+        <button class="ui icon button">
+          <i class="arrow alternate circle right icon"></i>
         </button>
         </form>
       </div>
@@ -106,3 +110,10 @@ class Chatbox extends Component {
 }
 
 export default Chatbox;
+
+// <div class="ui message">
+// <div class="header">
+//   Changes in Service
+// </div>
+// <p></p>
+// </div>

@@ -134,7 +134,7 @@ class Canvas extends Component {
   render() {
     return (
       <div>
-        <div>The word is {this.props.word}</div>
+        <div className="word">Your word is: {this.props.word}</div>
         <canvas
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
@@ -146,15 +146,17 @@ class Canvas extends Component {
         </canvas>
         <br/>
         <button onClick={this.clearArea}>Clear Area</button>
-          Line width : <select id="selWidth" onChange={this.changeWidth}>
+          &nbsp;
+          Line width: <select id="selWidth" onChange={this.changeWidth}>
               <option value="3" selected="selected">3</option>
               <option value="5">5</option>
               <option value="7">7</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
+              <option value="9">9</option>
+              <option value="11">11</option>
               <option value="30">30</option>
           </select>
-          Color : <select id="selColor" onChange={this.changeColor}>
+          &nbsp;
+          Color: <select id="selColor" onChange={this.changeColor}>
               <option value="black" selected="selected">black</option>
               <option value="blue">blue</option>
               <option value="red">red</option>

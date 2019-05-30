@@ -3,20 +3,25 @@
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
+  animation: App-logo-spin infinite 10s linear;
   height: 6vmin;
   pointer-events: none;
 }
 
 .App-header {
   background-color: #282c34;
-  min-height: 10vh;
+  background-image: linear-gradient(to right, #502987, #04bbdb);
+  min-height: 12vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(24px + 2vmin);
+  font-family: 'Cabin Sketch';
+  font-weight: 400;
   color: white;
+  padding-top: 15px;
+  margin-bottom: 20px;
 }
 
 .App-link {
@@ -34,4 +39,57 @@
 
 .hidden {
   display: none
+}
+
+.big-text {
+  font-size: 2em !important;
+  width: 300px !important;
+  height: 100px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.word {
+  font-size: 2em;
+  margin-bottom: 16px;
+}
+
+.width-250 {
+  max-width: 250px;
+}
+
+.height-600 {
+  height: 600px;
+  overflow: auto;
+  position: relative;
+  bottom: 0;
+}
+
+.img-flip {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+  -ms-filter: "FlipH";
+}
+
+.yellow {
+  color: #ffce30;
+}
+
+#user-info {
+  float: left;
+  border: 2px solid #ccc;
+}
+
+.parent {
+  display: grid;
+  grid-template-columns: 1fr 600px 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+    .div1 { grid-area: 1 / 1 / 2 / 2; }
+    .div2 { grid-area: 1 / 2 / 2 / 3; }
+    .div3 { grid-area: 1 / 3 / 2 / 4; }
 }

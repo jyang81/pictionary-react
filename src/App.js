@@ -5,7 +5,7 @@ import Header from './components/Header';
 import Canvas from './components/Canvas';
 import CanvasDisplay from './components/CanvasDisplay';
 import Chatbox from './components/Chatbox';
-import GameInfo from './containers/GameInfo';
+// import GameInfo from './containers/GameInfo';
 import Login from './components/Login';
 // import {BrowserRouter as Router, Route, Link, NavLink} from 'react-router-dom'
 // import { withRouter } from "react-router";
@@ -213,20 +213,43 @@ class App extends React.Component {
 
   renderLogin() {
     if (this.state.username === '')  {
-      return <Login loginNewUser={this.loginNewUser}/>
-     }  
+      return (
+        <><div></div>
+        <Login loginNewUser={this.loginNewUser}/>
+        </>
+      )
+     }
      else {
-      return <div>Logged In As: {this.state.username} Games Won: {this.state.gamesWon}</div>
+      return (
+      <div className="width-250">
+        <div class="ui card">
+          <div class="content">
+            <div class="meta">
+              <span class="date">Username:</span>
+            </div>
+            <br></br>
+            <a class="header">{this.state.username}</a>
+          </div>
+          <div class="extra content">
+              <i class="trophy icon"></i>
+              Games Won: {this.state.gamesWon}
+          </div>
+        </div>
+      </div>
+      )
      }
   }
 
   renderJoinButtons() {
     if (this.state.username !== '') {
+      if (this.state.gameAlreadyStarted && this.state.gameJoined) {
+        return
+      }
       if (this.state.gameAlreadyStarted) {
-        return <button onClick={() => this.joinGame()} className="ui button">Join Game</button>
+        return <button onClick={() => this.joinGame()} className="ui button big-text">Join Game</button>
       }
       else {
-        return <button onClick={() => this.createGame()} className="ui button">Create Game</button>
+        return <button onClick={() => this.createGame()} className="ui button big-text">Create Game</button>
       }
     }
   }
@@ -241,7 +264,7 @@ class App extends React.Component {
       }
     }
   }
-  
+
   renderChatBox() {
     if (this.state.username !== '' && this.state.gameJoined) {
       return <Chatbox handleWin ={this.handleWin} username={this.state.username} userId={this.state.userId}/>
@@ -253,11 +276,12 @@ class App extends React.Component {
     return (
      <div className="App">
       <Header />
-      {this.renderLogin()}
-      {this.renderJoinButtons() }
-      {this.renderCanvas()}
-      {this.renderChatBox()}
-      <GameInfo />
+      <container className="parent" >
+        {this.renderLogin()}
+        {this.renderJoinButtons() }
+        {this.renderCanvas()}
+        {this.renderChatBox()}
+      </container>
     </div>
     )
   }
