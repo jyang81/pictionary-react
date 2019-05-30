@@ -14,5 +14,6 @@ code {
 
 canvas {
   border: 2px solid #ccc;
-  cursor: crosshair
+  cursor: crosshair;
+  clear: both;
 }
