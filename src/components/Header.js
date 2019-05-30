@@ -4,9 +4,9 @@ const Header = () => {
   return (
     <header className="App-header">
       <div>
-        <i class="paint brush icon"></i>
+        <i className="paint brush icon"></i>
         <span className=""> REACT PICTIONARY </span>
-        <i class="pencil alternate icon"></i>
+        <i className="pencil alternate icon"></i>
       </div>
     </header>
 

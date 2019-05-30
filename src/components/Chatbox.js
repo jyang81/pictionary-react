@@ -56,27 +56,34 @@ class Chatbox extends Component {
   }
 
   CheckChatsForWin() {
-    this.state.chatLogs.map((el) => {
-      this.checkForWin(el)
-    })
+    this.state.chatLogs.map((el) => {this.checkForWin(el)})
   }
 
   checkForWin(message) {
     if (message.user_name === 'EvilHost' && message.content.substring(0,17) === 'Attention please,') {
-       alert('Hi Steve!')
        setTimeout(() => this.props.handleWin(),5000)
     }
   }
 
   renderChatLog() {
     return this.state.chatLogs.map((el) => {
-      return (
-        <div className="ui message" key={`chat_${el.id}`}>
-          <div class="header">
-            { el.user_name }: { el.content }
+        if (el.user_name === "EvilHost") {
+          return (
+          <div className="ui green message" key={`chat_${el.id}`}>
+            <div className="header">
+              { el.user_name }: { el.content }
+            </div>
           </div>
-        </div>
-      );
+        )
+        } else {
+          return (
+          <div className="ui blue message" key={`chat_${el.id}`}>
+            <div className="header">
+              { el.user_name }: { el.content }
+            </div>
+          </div>
+        )
+        }
     });
   }
 

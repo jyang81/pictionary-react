@@ -20,7 +20,7 @@ class Canvas extends Component {
       isDrawing: true,
       paths: [...this.state.paths, this.makePath()]
     })
-    this.drawLine(ev)
+    // this.drawLine(ev)
   }
 
   handleMouseMove = (ev) => {
@@ -31,22 +31,24 @@ class Canvas extends Component {
       let y = ev.clientY - ctx.canvas.offsetTop
       let p = this.state.paths
       p[p.length - 1].coordinates.push(x,y)
-      this.drawLine(ev)
+      this.drawLine(p)
     }
   }
 
-  drawLine = (ev) => {
+  drawLine = (p) => {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     ctx.save();
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
-    ctx.beginPath();
     ctx.lineWidth = this.state.curWidth;
     ctx.strokeStyle = this.state.curColor;
-    ctx.moveTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop);
-    ctx.lineTo(ev.clientX - ctx.canvas.offsetLeft, ev.clientY - ctx.canvas.offsetTop);
-    ctx.closePath();
+    ctx.beginPath();
+    const c = p[p.length - 1].coordinates;
+    ctx.moveTo(c[0], c[1]);
+    for (let i = 2; i < c.length; i += 2) {
+      ctx.lineTo(c[i], c[i+1]);
+    }
     ctx.stroke();
     ctx.restore();
   }
@@ -145,27 +147,35 @@ class Canvas extends Component {
           height="500">
         </canvas>
         <br/>
-        <button onClick={this.clearArea}>Clear Area</button>
+        <div>
+          <button className="ui button" onClick={this.clearArea}>Clear Area</button>
           &nbsp;
-          Line width: <select id="selWidth" onChange={this.changeWidth}>
-              <option value="3" selected="selected">3</option>
+          Line width: <select
+                      className="ui selection dropdown width-4em"
+                      id="selWidth"
+                      onChange={this.changeWidth}>
+              <option value="1">1</option>
+              <option value="3" selected>3</option>
               <option value="5">5</option>
-              <option value="7">7</option>
-              <option value="9">9</option>
-              <option value="11">11</option>
-              <option value="30">30</option>
+              <option value="15">15</option>
+              <option value="50">50</option>
           </select>
           &nbsp;
-          Color: <select id="selColor" onChange={this.changeColor}>
-              <option value="black" selected="selected">black</option>
-              <option value="blue">blue</option>
+          Color: <select
+                  className="ui selection dropdown width-4em"
+                  id="selColor"
+                  onChange={this.changeColor}>
+              <option value="black">black</option>
               <option value="red">red</option>
-              <option value="green">green</option>
-              <option value="yellow">yellow</option>
               <option value="orange">orange</option>
+              <option value="yellow">yellow</option>
+              <option value="green">green</option>
+              <option value="blue">blue</option>
+              <option value="purple">purple</option>
               <option value="gray">gray</option>
               <option value="white">white</option>
           </select>
+        </div>
       </div>
     )
   }
