@@ -34,7 +34,7 @@ class CanvasDisplay extends Component {
 
     clearArea = () => {
       console.log("cleared")
-      const canvas = document.getElementById('canvas-display');
+      const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
       // ctx.canvas.width = ctx.canvas.width;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -91,7 +91,7 @@ class CanvasDisplay extends Component {
   render() {
     return (
       <div>
-
+          <div className="word"><i className="pencil alternate icon drawIcon"></i> {this.props.drawer} is Drawing</div>
         <canvas
           id="canvas"
           width="600"

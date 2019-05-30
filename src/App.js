@@ -97,9 +97,7 @@ class App extends React.Component {
       }
 
       else if (status === 'End') {
-        setTimeout(() => {this.setState({
-          gameAlreadyStarted: false
-        })}, 5500)
+        setTimeout(() => {this.handleWin()}, 3000)
       }
     }
 
@@ -276,14 +274,14 @@ class App extends React.Component {
         return <Canvas word={this.state.word} clearClientCanvas={this.clearClientCanvas}/>
       }
       else {
-      return <CanvasDisplay />
+      return <CanvasDisplay drawer={this.state.drawer} />
       }
     }
   }
 
   renderChatBox() {
     if (this.state.username !== '' && this.state.gameJoined) {
-      return <Chatbox handleWin ={this.handleWin} username={this.state.username} userId={this.state.userId}/>
+      return <Chatbox username={this.state.username} userId={this.state.userId}/>
     }
   }
 

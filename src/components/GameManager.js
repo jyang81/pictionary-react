@@ -23,6 +23,7 @@ class GameManager extends React.Component {
           received: (data) => {
             // console.log('management data received',data)
             let gameState = data.command
+            console.log('Game Manager:',data.command)
             this.setState({ gameState });
             this.sendGameState()
           },
