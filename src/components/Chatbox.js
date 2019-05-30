@@ -85,7 +85,7 @@ class Chatbox extends Component {
     return (
       <div >
         <h3>Messages</h3>
-        <div className="height-600">
+        <div className="height-500">
           {this.renderChatLog()}
         </div>
         <br />
