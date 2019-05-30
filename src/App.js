@@ -80,10 +80,9 @@ class App extends React.Component {
     setGame(game) {
       if (game[0]) {
         this.setState({
-          gameAlreadyStarted: true,
-          gameId: game.id,
-          drawer: game.drawer_name,
-          word: game.word
+          gameId: game[0].id,
+          drawer: game[0].drawer_name,
+          word: game[0].word
         })
       }
       console.log('here is game:',game)
@@ -190,12 +189,13 @@ class App extends React.Component {
       gameAlreadyStarted: true,
       gameJoined: true,
       gameId: game.id,
-      drawer: game.drawer_name,
+      drawer: this.state.username,
       word: game.word
     }))
 }
 
   joinGame() {
+    this.getGameStatus()
     this.setState({
       gameJoined: true
     })
