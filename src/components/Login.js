@@ -34,12 +34,3 @@ class Login extends React.Component {
 }
 
 export default Login;
-
-    {/*
-    <div className="field">
-    <div className="ui checkbox">
-    <input type="checkbox" checked={true} tabIndex="0" class="hidden"/>
-    <label>I agree to the pay the creators of this game one hundred billion gazilion dollhairs</label>
-    </div>
-    </div>
-    */}

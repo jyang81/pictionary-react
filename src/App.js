@@ -198,7 +198,7 @@ class App extends React.Component {
     })
     .then(res => res.json())
     .then(_ => this.resetUserState())
-    .then(_ => this.getProfile())
+    // .then(_ => this.getProfile())
   }
 
   handleWin() {
@@ -222,16 +222,16 @@ class App extends React.Component {
      else {
       return (
       <div className="width-250">
-        <div class="ui card">
-          <div class="content">
-            <div class="meta">
-              <span class="date">Username:</span>
+        <div className="ui card">
+          <div className="content">
+            <div className="meta">
+              <span className="date">Username:</span>
             </div>
             <br></br>
-            <a class="header">{this.state.username}</a>
+            <a className="header">{this.state.username}</a>
           </div>
-          <div class="extra content">
-              <i class="trophy icon"></i>
+          <div className="extra content">
+              <i className="trophy icon"></i>
               Games Won: {this.state.gamesWon}
           </div>
         </div>
@@ -276,12 +276,12 @@ class App extends React.Component {
     return (
      <div className="App">
       <Header />
-      <container className="parent" >
+      <div className="parent" >
         {this.renderLogin()}
         {this.renderJoinButtons() }
         {this.renderCanvas()}
         {this.renderChatBox()}
-      </container>
+      </div>
     </div>
     )
   }
