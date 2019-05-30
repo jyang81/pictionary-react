@@ -7,6 +7,7 @@ import CanvasDisplay from './components/CanvasDisplay';
 import Chatbox from './components/Chatbox';
 import GameInfo from './containers/GameInfo';
 import Login from './components/Login';
+import GameManager from './components/GameManager';
 // import {BrowserRouter as Router, Route, Link, NavLink} from 'react-router-dom'
 // import { withRouter } from "react-router";
 
@@ -32,6 +33,7 @@ class App extends React.Component {
     }
 
     this.resetUserState = this.resetUserState.bind(this)
+    this.setGameState = this.setGameState.bind(this)
     this.loginNewUser = this.loginNewUser.bind(this)
     this.createGame = this.createGame.bind(this)
     this.handleWin = this.handleWin.bind(this)
@@ -86,6 +88,20 @@ class App extends React.Component {
       }
       console.log('here is game:',game)
       console.log('here is state:',this.state)
+    }
+
+    setGameState(status) {
+      if (status === 'Started') {
+        this.setState({
+          gameAlreadyStarted: true
+        })
+      }
+
+      else if (status === 'End') {
+        this.setState({
+          gameAlreadyStarted: false
+        })
+      }
     }
 
   loginNewUser(username) {
@@ -198,7 +214,7 @@ class App extends React.Component {
     })
     .then(res => res.json())
     .then(_ => this.resetUserState())
-    .then(_ => this.getProfile())
+    // .then(_ => this.getProfile())
   }
 
   handleWin() {
@@ -258,6 +274,7 @@ class App extends React.Component {
       {this.renderCanvas()}
       {this.renderChatBox()}
       <GameInfo />
+      <GameManager setGameState={this.setGameState}/>
     </div>
     )
   }
