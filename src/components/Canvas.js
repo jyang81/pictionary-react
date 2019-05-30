@@ -103,6 +103,8 @@ class Canvas extends Component {
       this.setState({
         paths: []
       })
+      // this.props.clearClientCanvas()
+      this.paths.clear()
     }
 
     componentWillMount() {
@@ -123,12 +125,14 @@ class Canvas extends Component {
           // this.setState({ paths });
         // },
         create: function(color, strokeWidth, coordinates) {
-
           this.perform('create', {
             color: color,
             strokeWidth: strokeWidth,
-            coordinates: coordinates
+            coordinates: coordinates,
           });
+        },
+        clear: function() {
+          this.perform('clear');
         }
       });
     }

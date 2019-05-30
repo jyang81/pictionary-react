@@ -98,9 +98,9 @@ class App extends React.Component {
       }
 
       else if (status === 'End') {
-        this.setState({
+        setTimeout(() => {this.setState({
           gameAlreadyStarted: false
-        })
+        })}, 5500)
       }
     }
 
@@ -273,7 +273,7 @@ class App extends React.Component {
   renderCanvas() {
     if (this.state.gameJoined) {
       if (this.state.drawer === this.state.username) {
-        return <Canvas word={this.state.word}/>
+        return <Canvas word={this.state.word} clearClientCanvas={this.clearClientCanvas}/>
       }
       else {
       return <CanvasDisplay />
