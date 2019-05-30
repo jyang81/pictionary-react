@@ -159,12 +159,16 @@ class App extends React.Component {
      <div className="App">
       {this.state.username === '' ? (<Login loginNewUser={this.loginNewUser}/>) : (<div>Logged In As:{this.state.username}</div>)  }
       <Header />
-      {this.state.gameAlreadyStarted ? 
-      (<button onClick={() => this.joinGame()} className="ui button">Join Game</button>) : 
+      {this.state.gameAlreadyStarted ?
+      (<button onClick={() => this.joinGame()} className="ui button">Join Game</button>) :
       (<button onClick={() => this.createGame()} className="ui button">Create Game</button>)  }
-      {this.state.drawer === this.state.username ? 
-      (<Canvas word={this.state.word}/>) :
-      (<CanvasDisplay />)}
+      {this.state.drawer === this.state.username ?
+      <>
+      <Canvas word={this.state.word} />
+      <div className="hidden"><CanvasDisplay /></div>
+      </>
+      :
+      <CanvasDisplay />}
       <Chatbox username={this.state.username} userId={this.state.userId}/>
       <GameInfo />
     </div>
