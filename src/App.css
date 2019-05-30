@@ -93,4 +93,6 @@
     .div3 { grid-area: 1 / 3 / 2 / 4; }
 }
 
-
+.drawIcon {
+  display: inline-block;
+}
