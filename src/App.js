@@ -31,9 +31,12 @@ class App extends React.Component {
       gamesWon: 0
     }
 
+    this.resetUserState = this.resetUserState.bind(this)
     this.loginNewUser = this.loginNewUser.bind(this)
     this.createGame = this.createGame.bind(this)
+    this.handleWin = this.handleWin.bind(this)
     this.joinGame = this.joinGame.bind(this)
+    this.endGame = this.endGame.bind(this)
 
     // if (this.getToken()) {
     //   this.getProfile()
@@ -100,7 +103,7 @@ class App extends React.Component {
       })
       .then(res => res.json())
       .then(json => {
-        console.log('login:', json)
+        // console.log('login:', json)
         if (json && json.jwt) {
           this.saveToken(json.jwt)
           this.getProfile()
@@ -126,6 +129,16 @@ class App extends React.Component {
         userId: json.user.id,
         gamesWon: json.user.games_won
       })
+    })
+  }
+
+  resetUserState() {
+    this.setState({
+      gameAlreadyStarted: false,
+      gameJoined: false,
+      gameId: 0,
+      drawer: '',
+      word: ''
     })
   }
 
@@ -164,13 +177,38 @@ class App extends React.Component {
       drawer: game.drawer_name,
       word: game.word
     }))
-    .then(_ => console.log('here is the state after creation:',this.state))
 }
 
   joinGame() {
     this.setState({
       gameJoined: true
     })
+  }
+
+  endGame() {
+    let id = this.state.gameId
+    let token = this.getToken()
+    fetch(GamesURL + '/' + `${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    .then(res => res.json())
+    .then(_ => this.resetUserState())
+    .then(_ => this.getProfile())
+  }
+
+  handleWin() {
+    if (this.state.username === this.state.drawer) {
+      this.endGame()
+    }
+    else {
+      this.resetUserState()
+      this.getProfile()
+    }
   }
 
   renderLogin() {
@@ -205,8 +243,8 @@ class App extends React.Component {
   }
   
   renderChatBox() {
-    if (this.state.username !== '') {
-      return <Chatbox username={this.state.username} userId={this.state.userId}/>
+    if (this.state.username !== '' && this.state.gameJoined) {
+      return <Chatbox handleWin ={this.handleWin} username={this.state.username} userId={this.state.userId}/>
     }
   }
 
