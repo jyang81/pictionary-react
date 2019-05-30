@@ -30,6 +30,7 @@ class Chatbox extends Component {
         let chatLogs = this.state.chatLogs;
         chatLogs.push(data);
         this.setState({ chatLogs: chatLogs });
+        this.CheckChatsForWin()
       },
       create: function(chatContent, id, username) {
 
@@ -52,6 +53,19 @@ class Chatbox extends Component {
     this.setState({
       currentChatMessage: ''
     });
+  }
+
+  CheckChatsForWin() {
+    this.state.chatLogs.map((el) => {
+      this.checkForWin(el)
+    })
+  }
+
+  checkForWin(message) {
+    if (message.user_name === 'EvilHost' && message.content.substring(0,17) === 'Attention please,') {
+       alert('Hi Steve!')
+       setTimeout(() => this.props.handleWin(),5000)
+    }
   }
 
   renderChatLog() {
