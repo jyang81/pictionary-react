@@ -1,17 +1,31 @@
 import React, {Component} from 'react';
 import Cable from 'actioncable';
+import { Transition } from 'semantic-ui-react'
 
 class Chatbox extends Component {
   constructor() {
     super()
     this.state = {
       currentChatMessage: '',
-      chatLogs: []
+      chatLogs: [],
+      visible: false
     }
   }
 
   componentWillMount() {
     this.createSocket()
+  }
+
+  componentDidMount() {
+    this.setState({
+      visible: true
+    })
+  }
+
+  componentWillUnmount() {
+    this.setState({
+      visible: false
+    })
   }
 
   updateCurrentChatMessage(ev) {
@@ -89,7 +103,9 @@ class Chatbox extends Component {
 
 
   render() {
+    const visible = this.state.visible
     return (
+      <Transition visible={visible} duration={500}>
       <div >
         <h3>Messages</h3>
         <div className="height-500">
@@ -110,6 +126,7 @@ class Chatbox extends Component {
         </button>
         </form>
       </div>
+      </Transition>
     )
   }
 

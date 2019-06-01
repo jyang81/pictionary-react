@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import Cable from 'actioncable';
+// import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import { Transition } from 'semantic-ui-react'
 
 class Canvas extends Component {
   constructor() {
@@ -8,7 +10,8 @@ class Canvas extends Component {
       isDrawing: false,
       curWidth: 3,
       curColor: "black",
-      paths: []
+      paths: [],
+      visible: false
     }
   }
 
@@ -112,6 +115,18 @@ class Canvas extends Component {
       console.log('created socket')
     }
 
+    componentDidMount() {
+      this.setState({
+        visible: true
+      })
+    }
+
+    componentWillUnmount() {
+      this.setState({
+        visible: false
+      })
+    }
+
     createSocket() {
       let cable = Cable.createConsumer('ws://localhost:3000/cable');
       this.paths = cable.subscriptions.create({
@@ -138,8 +153,10 @@ class Canvas extends Component {
     }
 
   render() {
+    const visible = this.state.visible
     return (
-      <div>
+      <Transition visible={visible} duration={1000}>
+      <div class="ui small scale visible transition">
         <div className="word">Your word is: {this.props.word}</div>
         <canvas
           onMouseDown={this.handleMouseDown}
@@ -181,6 +198,7 @@ class Canvas extends Component {
           </select>
         </div>
       </div>
+      </Transition>
     )
   }
 

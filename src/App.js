@@ -8,6 +8,7 @@ import Chatbox from './components/Chatbox';
 // import GameInfo from './containers/GameInfo';
 import Login from './components/Login';
 import GameManager from './components/GameManager';
+import Profile from './components/Profile';
 // import {BrowserRouter as Router, Route, Link, NavLink} from 'react-router-dom'
 // import { withRouter } from "react-router";
 
@@ -29,7 +30,8 @@ class App extends React.Component {
       gameId: 0,
       drawer: '',
       word: '',
-      gamesWon: 0
+      gamesWon: 0,
+      gameWillEnd: false
     }
 
     this.resetUserState = this.resetUserState.bind(this)
@@ -39,12 +41,11 @@ class App extends React.Component {
     this.handleWin = this.handleWin.bind(this)
     this.joinGame = this.joinGame.bind(this)
     this.endGame = this.endGame.bind(this)
+    this.logout = this.logout.bind(this)
 
-    // if (this.getToken()) {
-    //   this.getProfile()
-    // }
-    this.removeToken()
-
+    if (this.getToken()) {
+      this.getProfile()
+    }
 
   }
 
@@ -59,7 +60,7 @@ class App extends React.Component {
           }
       })
       .then(res => res.json())
-      .then(json => console.log('users:', json))
+      // .then(json => console.log('users:', json))
   }
 
 
@@ -85,7 +86,7 @@ class App extends React.Component {
           word: game[0].word
         })
       }
-      console.log('here is game:',game)
+      // console.log('here is game:',game)
       console.log('here is state:',this.state)
     }
 
@@ -97,6 +98,7 @@ class App extends React.Component {
       }
 
       else if (status === 'End') {
+        this.setState({gameWillEnd: true})
         setTimeout(() => {this.handleWin()}, 3000)
       }
     }
@@ -116,7 +118,7 @@ class App extends React.Component {
       })
       .then(res => res.json())
       .then(json => {
-        // console.log('login:', json)
+        console.log('login:', json)
         if (json && json.jwt) {
           this.saveToken(json.jwt)
           this.getProfile()
@@ -215,14 +217,30 @@ class App extends React.Component {
     // .then(_ => this.getProfile())
   }
 
+  logout() {
+    setTimeout(() => {
+      this.removeToken()
+      this.setState({
+        username : '',
+        userId: 0,
+        gameAlreadyStarted: false,
+        gameJoined: false,
+        gameId: 0,
+        drawer: '',
+        word: '',
+        gamesWon: 0
+      })},600)
+  }
+
   handleWin() {
+    setTimeout(() => {
     if (this.state.username === this.state.drawer) {
       this.endGame()
     }
     else {
       this.resetUserState()
       this.getProfile()
-    }
+    }}, 1000)
   }
 
   renderLogin() {
@@ -235,21 +253,11 @@ class App extends React.Component {
      }
      else {
       return (
-      <div className="width-250">
-        <div className="ui card">
-          <div className="content">
-            <div className="meta">
-              <span className="date">Username:</span>
-            </div>
-            <br></br>
-            <a className="header">{this.state.username}</a>
-          </div>
-          <div className="extra content">
-              <i className="trophy icon"></i>
-              Games Won: {this.state.gamesWon}
-          </div>
-        </div>
-      </div>
+        <Profile 
+          username={this.state.username} 
+          gamesWon={this.state.gamesWon} 
+          logout={this.logout}
+        />
       )
      }
   }
@@ -271,10 +279,10 @@ class App extends React.Component {
   renderCanvas() {
     if (this.state.gameJoined) {
       if (this.state.drawer === this.state.username) {
-        return <Canvas word={this.state.word} clearClientCanvas={this.clearClientCanvas}/>
+        return <Canvas word={this.state.word} clearClientCanvas={this.clearClientCanvas} gameWillEnd={this.state.gameWillEnd}/>
       }
       else {
-      return <CanvasDisplay drawer={this.state.drawer} />
+      return <CanvasDisplay drawer={this.state.drawer} gameWillEnd={this.state.gameWillEnd}/>
       }
     }
   }
