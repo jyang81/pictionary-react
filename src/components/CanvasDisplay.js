@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import Cable from 'actioncable';
+import { Transition } from 'semantic-ui-react'
 
 class CanvasDisplay extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      paths: []
+      paths: [],
+      visible: false
     }
   }
 
@@ -59,6 +61,13 @@ class CanvasDisplay extends Component {
       console.log('created socket')
     }
 
+    componentDidMount() {
+      console.log('mounted')
+      this.setState({
+        visible: true
+      })
+    }
+
     createSocket() {
       let cable = Cable.createConsumer('ws://localhost:3000/cable');
       this.paths = cable.subscriptions.create({
@@ -87,10 +96,23 @@ class CanvasDisplay extends Component {
       });
     }
 
+    transitionOut() {
+      this.setState({
+        visible: false
+      })
+    }
+
+    // static getDerivedStateFromProps(props,state) {
+
+    // }
+
 
   render() {
+    const { visible } = this.state
+    // if (this.props.gameWillEnd) {this.transitionOut()}
     return (
-      <div>
+      <Transition visible={visible} duration={1000}>
+      <div className="ui small scale visible transition">
           <div className="word"><i className="pencil alternate icon drawIcon"></i> {this.props.drawer} is Drawing</div>
         <canvas
           id="canvas"
@@ -99,6 +121,7 @@ class CanvasDisplay extends Component {
         </canvas>
 
       </div>
+     </Transition>
     )
   }
 
