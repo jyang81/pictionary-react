@@ -69,7 +69,7 @@ class CanvasDisplay extends Component {
     }
 
     createSocket() {
-      let cable = Cable.createConsumer('ws://localhost:3000/cable');
+      let cable = Cable.createConsumer('ws://react-pictionary-backend.herokuapp.com/cable');
       this.paths = cable.subscriptions.create({
         channel: 'CanvasChannel'
       }, {
