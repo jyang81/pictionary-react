@@ -14,9 +14,10 @@ import Profile from './components/Profile';
 
 
 
-const GamesURL = 'http://localhost:3000/api/v1/games'
-const UserURL = 'http://localhost:3000/api/v1/users'
-const LoginURL = 'http://localhost:3000/api/v1/login'
+const GamesURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/games'
+const UserURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/users'
+const LoginURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/login'
+const ProfileURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/profile'
 
 class App extends React.Component {
 
@@ -131,7 +132,7 @@ class App extends React.Component {
 
   getProfile = () => {
     let token = this.getToken()
-    fetch('http://localhost:3000/api/v1/profile', {
+    fetch(ProfileURL, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
