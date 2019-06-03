@@ -35,7 +35,7 @@ class Chatbox extends Component {
   }
 
   createSocket() {
-    let cable = Cable.createConsumer('ws://react-pictionary-backend.herokuapp.com/cable');
+    let cable = Cable.createConsumer('wss://react-pictionary-backend.herokuapp.com/cable');
     this.chats = cable.subscriptions.create({
       channel: 'ChatChannel'
     }, {
