@@ -49,6 +49,10 @@
   margin-right: auto !important;
 }
 
+.instructions {
+  font-size: 2rem;
+}
+
 .word {
   font-size: 2em;
   margin-bottom: 1rem;

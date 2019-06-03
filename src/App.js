@@ -253,9 +253,9 @@ class App extends React.Component {
      }
      else {
       return (
-        <Profile 
-          username={this.state.username} 
-          gamesWon={this.state.gamesWon} 
+        <Profile
+          username={this.state.username}
+          gamesWon={this.state.gamesWon}
           logout={this.logout}
         />
       )
@@ -268,10 +268,20 @@ class App extends React.Component {
         return
       }
       if (this.state.gameAlreadyStarted) {
-        return <button onClick={() => this.joinGame()} className="ui button big-text">Join Game</button>
+        return (
+          <div>
+          <div>Click Join Game to guess the word!</div><br></br>
+          <button onClick={() => this.joinGame()} className="ui button big-text">Join Game</button>
+          </div>
+        )
       }
       else {
-        return <button onClick={() => this.createGame()} className="ui button big-text">Create Game</button>
+        return (
+          <div>
+          <div>Click Create Game to be the drawer!</div><br></br>
+          <button onClick={() => this.createGame()} className="ui button big-text">Create Game</button>
+          </div>
+        )
       }
     }
   }

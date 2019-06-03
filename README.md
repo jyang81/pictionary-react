@@ -1,68 +1,58 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## React Pictionary
 
-In the project directory, you can run:
+React Pictionary is a realtime multiplayer drawing game. One person draws while other players guess. Once a player guesses the word correctly, they will be awarded a win, and the game will end. Currently, only one game can be in progress at a time, but everyone can join the game in progress.
 
-### `npm start`
+### How to play:
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Log in with username
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+2. The first person to click "Create Game" will be the drawer for that game.
 
-### `npm test`
+3. Other players can click "Join Game" to guess what the drawer is drawing.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. The drawer will get a random word and draw it until someone guesses correctly.
 
-### `npm run build`
+5. Once, a correct guess has been made, the Host will announce the winner and that user will get a point.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+6. Guesses must be spelled correctly, but are not case-sensitive
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+7. The game will end once a word is guessed correctly, and another user can have the chance to draw by clicking the "Create Game" button.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+8. This can continue until players decide to quit.
 
-### `npm run eject`
+9. We know there are still some bugs left. If you run into any errors, please have all users log out and refresh their browsers.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Future updates:
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+ - Automatically assign the drawer to the next person in the game
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+ - Add a timer for each round
 
-## Learn More
+ - Display current players list
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+ - Undo button
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+ - Add more words
 
-### Code Splitting
+ - improve drawing tools (more colors/widths/brush shapes)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
 
-### Analyzing the Bundle Size
+### Technologies used:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+ - React (front end)
+ - Rails (back end)
+ - Canvas (drawing)
+ - ActionCable (realtime drawing and chat)
+ - JWT (authorization)
+ - Semantic UI (styling)
 
-### Making a Progressive Web App
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+### Questions/Comments/Suggestions?
 
-### Advanced Configuration
+Please get in touch with us at:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+@jyang81 (Joe)
+@ConditionalStatementLifestyle (Jon)
