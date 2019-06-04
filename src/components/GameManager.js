@@ -4,7 +4,7 @@ import Cable from 'actioncable';
 class GameManager extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { 
+        this.state = {
             gameState: ''
          }
     }
@@ -15,7 +15,7 @@ class GameManager extends React.Component {
     }
 
     createSocket() {
-        let cable = Cable.createConsumer('ws://localhost:3000/cable');
+        let cable = Cable.createConsumer('wss://react-pictionary-backend.herokuapp.com/cable');
         this.manager = cable.subscriptions.create({
           channel: 'ManagerChannel'
         }, {
@@ -28,7 +28,7 @@ class GameManager extends React.Component {
             this.sendGameState()
           },
           create: function(command) {
-    
+
             this.perform('create', {
               command: command
             });
@@ -40,9 +40,9 @@ class GameManager extends React.Component {
         this.props.setGameState(this.state.gameState)
       }
 
-    render() { 
+    render() {
         return ( null );
     }
 }
- 
+
 export default GameManager;
