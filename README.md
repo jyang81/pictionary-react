@@ -43,6 +43,9 @@ React Pictionary is a realtime multiplayer drawing game. One person draws while 
  - ActionCable (realtime drawing and chat)
  - JWT (authorization)
  - Semantic UI (styling)
+ 
+### Link to backend repo:
+https://github.com/jyang81/pictionary-rails
 
 
 ### Questions/Comments/Suggestions?
