@@ -15,7 +15,7 @@ class GameManager extends React.Component {
     }
 
     createSocket() {
-        let cable = Cable.createConsumer('wss://react-pictionary-backend.herokuapp.com/cable');
+        let cable = Cable.createConsumer('wss://react-pictionary-backend.herokuapp.com/api/v1/cable');
         this.manager = cable.subscriptions.create({
           channel: 'ManagerChannel'
         }, {
