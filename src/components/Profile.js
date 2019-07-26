@@ -23,8 +23,8 @@ class Profile extends React.Component {
     }
 
     render() {
-        const visible = this.state.visible    
-        return ( 
+        const visible = this.state.visible
+        return (
             <Transition visible={visible} duration={600}>
             <div className="width-250 ui small scale visible transition">
             <div className="ui card">
@@ -33,7 +33,7 @@ class Profile extends React.Component {
                     <span className="date">Username:</span>
                 </div>
                 <br></br>
-                <a className="header">{this.props.username}</a>
+                <a href="/" className="header">{this.props.username}</a>
                 </div>
                 <div className="extra content">
                     <i className="trophy icon"></i>
@@ -45,7 +45,7 @@ class Profile extends React.Component {
             </div>
             </Transition>
             );
-        }    
+        }
 }
- 
+
 export default Profile;

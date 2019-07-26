@@ -205,7 +205,7 @@ class App extends React.Component {
   endGame() {
     let id = this.state.gameId
     let token = this.getToken()
-    fetch(GamesURL + '/' + `${id}`, {
+    fetch(GamesURL`/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
