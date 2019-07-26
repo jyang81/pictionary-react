@@ -1,8 +1,8 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## React Pictionary
 
 React Pictionary is a realtime multiplayer drawing game. One person draws while other players guess. Once a player guesses the word correctly, they will be awarded a win, and the game will end. Currently, only one game can be in progress at a time, but everyone can join the game in progress.
+
+![Screenshot](/react-pictionary-screenshot.png)
 
 ### How to play:
 
@@ -43,6 +43,9 @@ React Pictionary is a realtime multiplayer drawing game. One person draws while 
  - ActionCable (realtime drawing and chat)
  - JWT (authorization)
  - Semantic UI (styling)
+ 
+### Link to backend repo:
+https://github.com/jyang81/pictionary-rails
 
 
 ### Questions/Comments/Suggestions?
@@ -52,3 +55,7 @@ Please get in touch with us:
 @jyang81 (Joe)
 
 @ConditionalStatementLifestyle (Jon)
+
+---
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
