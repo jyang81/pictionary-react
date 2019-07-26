@@ -121,8 +121,8 @@ class Chatbox extends Component {
             placeholder='Enter your guess'
           />
         </div> &nbsp;
-        <button class="ui icon button">
-          <i class="arrow alternate circle right icon"></i>
+        <button className="ui icon button">
+          <i className="arrow alternate circle right icon"></i>
         </button>
         </form>
       </div>

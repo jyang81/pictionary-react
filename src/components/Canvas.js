@@ -156,7 +156,7 @@ class Canvas extends Component {
     const visible = this.state.visible
     return (
       <Transition visible={visible} duration={1000}>
-      <div class="ui small scale visible transition">
+      <div className="ui small scale visible transition">
         <div className="word">Your word is: {this.props.word}</div>
         <canvas
           onMouseDown={this.handleMouseDown}
