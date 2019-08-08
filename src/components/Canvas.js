@@ -3,6 +3,12 @@ import Cable from 'actioncable';
 // import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { Transition } from 'semantic-ui-react'
 
+// == LOCAL URL ==
+// const WS_URL = "ws://localhost:3000/cable"
+
+// == HEROKU URL ==
+const WS_URL = "wss://react-pictionary-backend.herokuapp.com/cable"
+
 class Canvas extends Component {
   constructor() {
     super()
@@ -128,7 +134,7 @@ class Canvas extends Component {
     }
 
     createSocket() {
-      let cable = Cable.createConsumer('wss://react-pictionary-backend.herokuapp.com/api/v1/cable');
+      let cable = Cable.createConsumer(WS_URL)
       this.paths = cable.subscriptions.create({
         channel: 'CanvasChannel'
       }, {
@@ -176,7 +182,7 @@ class Canvas extends Component {
                       id="selWidth"
                       onChange={this.changeWidth}>
               <option value="1">1</option>
-              <option value="3" selected>3</option>
+              <option value="3">3</option>
               <option value="5">5</option>
               <option value="15">15</option>
               <option value="50">50</option>
@@ -193,6 +199,7 @@ class Canvas extends Component {
               <option value="green">green</option>
               <option value="blue">blue</option>
               <option value="purple">purple</option>
+              <option value="brown">brown</option>
               <option value="gray">gray</option>
               <option value="white">white</option>
           </select>

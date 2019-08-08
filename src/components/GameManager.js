@@ -1,6 +1,12 @@
 import React from 'react'
 import Cable from 'actioncable';
 
+// == LOCAL URL ==
+// const WS_URL = "ws://localhost:3000/cable"
+
+// == HEROKU URL ==
+const WS_URL = "wss://react-pictionary-backend.herokuapp.com/cable"
+
 class GameManager extends React.Component {
     constructor(props) {
         super(props);
@@ -15,7 +21,7 @@ class GameManager extends React.Component {
     }
 
     createSocket() {
-        let cable = Cable.createConsumer('wss://react-pictionary-backend.herokuapp.com/api/v1/cable');
+        let cable = Cable.createConsumer(WS_URL);
         this.manager = cable.subscriptions.create({
           channel: 'ManagerChannel'
         }, {

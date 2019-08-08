@@ -1,5 +1,4 @@
 import React from 'react';
-// import logo from './logo.svg';
 import './App.css';
 import Header from './components/Header';
 import Canvas from './components/Canvas';
@@ -12,8 +11,13 @@ import Profile from './components/Profile';
 // import {BrowserRouter as Router, Route, Link, NavLink} from 'react-router-dom'
 // import { withRouter } from "react-router";
 
+// ======== LOCAL HOSTING URLS =========
+// const GamesURL = 'http://localhost:3000/api/v1/games'
+// const UserURL = 'http://localhost:3000/api/v1/users'
+// const LoginURL = 'http://localhost:3000/api/v1/login'
+// const ProfileURL = 'http://localhost:3000/api/v1/profile'
 
-
+// ======= HEROKU URLS =============
 const GamesURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/games'
 const UserURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/users'
 const LoginURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/login'
@@ -205,7 +209,7 @@ class App extends React.Component {
   endGame() {
     let id = this.state.gameId
     let token = this.getToken()
-    fetch(GamesURL`/${id}`, {
+    fetch(`${GamesURL}/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

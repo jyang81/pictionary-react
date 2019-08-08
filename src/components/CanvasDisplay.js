@@ -2,6 +2,13 @@ import React, {Component} from 'react';
 import Cable from 'actioncable';
 import { Transition } from 'semantic-ui-react'
 
+// == LOCAL URL ==
+// const WS_URL = "ws://localhost:3000/cable"
+
+// == HEROKU URL ==
+const WS_URL = "wss://react-pictionary-backend.herokuapp.com/cable"
+
+
 class CanvasDisplay extends Component {
   constructor(props) {
     super(props)
@@ -69,7 +76,7 @@ class CanvasDisplay extends Component {
     }
 
     createSocket() {
-      let cable = Cable.createConsumer('wss://react-pictionary-backend.herokuapp.com/api/v1/cable');
+      let cable = Cable.createConsumer(WS_URL);
       this.paths = cable.subscriptions.create({
         channel: 'CanvasChannel'
       }, {
