@@ -12,16 +12,16 @@ import Profile from './components/Profile';
 // import { withRouter } from "react-router";
 
 // ======== LOCAL HOSTING URLS =========
-// const GamesURL = 'http://localhost:3000/api/v1/games'
-// const UserURL = 'http://localhost:3000/api/v1/users'
-// const LoginURL = 'http://localhost:3000/api/v1/login'
-// const ProfileURL = 'http://localhost:3000/api/v1/profile'
+// const gamesURL = 'http://localhost:3000/api/v1/games'
+// const usersURL = 'http://localhost:3000/api/v1/users'
+// const loginURL = 'http://localhost:3000/api/v1/login'
+// const profileURL = 'http://localhost:3000/api/v1/profile'
 
 // ======= HEROKU URLS =============
-const GamesURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/games'
-const UserURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/users'
-const LoginURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/login'
-const ProfileURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/profile'
+const gamesURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/games'
+const usersURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/users'
+const loginURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/login'
+const profileURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/profile'
 
 class App extends React.Component {
 
@@ -56,7 +56,7 @@ class App extends React.Component {
 
   getUsers() {
     let token = this.getToken()
-       fetch(UserURL, {
+       fetch(usersURL, {
         method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ class App extends React.Component {
 
   getGameStatus() {
     let token = this.getToken()
-      fetch(GamesURL, {
+      fetch(gamesURL, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ class App extends React.Component {
     }
 
   loginNewUser(username) {
-       fetch(LoginURL, {
+       fetch(loginURL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -136,7 +136,7 @@ class App extends React.Component {
 
   getProfile = () => {
     let token = this.getToken()
-    fetch(ProfileURL, {
+    fetch(profileURL, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -177,7 +177,7 @@ class App extends React.Component {
   createGame() {
     console.log('clicked')
     let token = this.getToken()
-    fetch(GamesURL, {
+    fetch(gamesURL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -209,7 +209,7 @@ class App extends React.Component {
   endGame() {
     let id = this.state.gameId
     let token = this.getToken()
-    fetch(`${GamesURL}/${id}`, {
+    fetch(`${gamesURL}/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
