@@ -139,12 +139,6 @@ class Canvas extends Component {
         channel: 'CanvasChannel'
       }, {
         connected: () => {},
-        // received: (data) => {
-          // let paths = this.state.paths;
-          // paths.push(data);
-          // debugger
-          // this.setState({ paths });
-        // },
         create: function(color, strokeWidth, coordinates) {
           this.perform('create', {
             color: color,
