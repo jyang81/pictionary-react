@@ -62,7 +62,7 @@ class Canvas extends Component {
     ctx.restore();
   }
 
-  handleMouseUp = (ev) => {
+  handleMouseUpOrLeave = (ev) => {
     // console.log("mouse up")
     let p = this.state.paths
     this.setState({
@@ -72,22 +72,22 @@ class Canvas extends Component {
     this.paths.create(p[p.length - 1].color, p[p.length - 1].strokeWidth, p[p.length - 1].coordinates)
   }
 
-  handleMouseLeave = (ev) => {
-    // console.log("mouse leave")
-    this.setState({
-      isDrawing: false
-    })
-  }
+  // handleMouseLeave = (ev) => {
+  //   // console.log("mouse leave")
+  //   this.setState({
+  //     isDrawing: false
+  //   })
+  // }
 
   changeWidth = (ev) => {
-    console.log(ev.target.value)
+    // console.log(ev.target.value)
     this.setState({
       curWidth: ev.target.value
     })
   }
 
   changeColor = (ev) => {
-    console.log(ev.target.value);
+    // console.log(ev.target.value);
     this.setState({
       curColor: ev.target.value
     })
@@ -104,7 +104,7 @@ class Canvas extends Component {
     }
 
     clearArea = () => {
-      console.log("cleared")
+      // console.log("cleared")
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
       // ctx.canvas.width = ctx.canvas.width;
@@ -161,8 +161,8 @@ class Canvas extends Component {
         <canvas
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
-          onMouseUp={this.handleMouseUp}
-          onMouseLeave={this.handleMouseLeave}
+          onMouseUp={this.handleMouseUpOrLeave}
+          onMouseLeave={this.handleMouseUpOrLeave}
           id="canvas"
           width="600"
           height="500">

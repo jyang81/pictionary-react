@@ -92,7 +92,7 @@ class App extends React.Component {
         })
       }
       // console.log('here is game:',game)
-      console.log('here is state:',this.state)
+      // console.log('here is state:',this.state)
     }
 
     setGameState(status) {
@@ -123,7 +123,7 @@ class App extends React.Component {
       })
       .then(res => res.json())
       .then(json => {
-        console.log('login:', json)
+        // console.log('login:', json)
         if (json && json.jwt) {
           this.saveToken(json.jwt)
           this.getProfile()
@@ -143,7 +143,7 @@ class App extends React.Component {
     })
     .then(res => res.json())
     .then(json => {
-      console.log('profile:', json)
+      // console.log('profile:', json)
       this.setState({
         username: json.user.name,
         userId: json.user.id,
@@ -175,7 +175,7 @@ class App extends React.Component {
   }
 
   createGame() {
-    console.log('clicked')
+    // console.log('clicked')
     let token = this.getToken()
     fetch(gamesURL, {
       method: 'POST',
