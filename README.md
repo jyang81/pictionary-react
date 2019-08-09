@@ -32,7 +32,7 @@ React Pictionary is a realtime multiplayer drawing game. One person draws while 
  - Display current players list
  - Undo button
  - Add more words
- - improve drawing tools (more colors/widths/brush shapes)
+ - improve drawing tools (slider for brush size/clickable color picker)
 
 
 ### Technologies used:
@@ -43,7 +43,7 @@ React Pictionary is a realtime multiplayer drawing game. One person draws while 
  - ActionCable (realtime drawing and chat)
  - JWT (authorization)
  - Semantic UI (styling)
- 
+
 ### Link to backend repo:
 https://github.com/jyang81/pictionary-rails
 
@@ -59,3 +59,5 @@ Please get in touch with us:
 ---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+<a href="https://icons8.com/icon/20388/pencil-drawing">Pencil Drawing icon by Icons8</a>
