@@ -62,7 +62,7 @@ class Canvas extends Component {
     ctx.restore();
   }
 
-  handleMouseUpOrLeave = (ev) => {
+  handleMouseUp = (ev) => {
     // console.log("mouse up")
     let p = this.state.paths
     this.setState({
@@ -72,12 +72,12 @@ class Canvas extends Component {
     this.paths.create(p[p.length - 1].color, p[p.length - 1].strokeWidth, p[p.length - 1].coordinates)
   }
 
-  // handleMouseLeave = (ev) => {
-  //   // console.log("mouse leave")
-  //   this.setState({
-  //     isDrawing: false
-  //   })
-  // }
+  handleMouseLeave = (ev) => {
+    // console.log("mouse leave")
+    this.setState({
+      isDrawing: false
+    })
+  }
 
   changeWidth = (ev) => {
     // console.log(ev.target.value)
@@ -118,7 +118,7 @@ class Canvas extends Component {
 
     componentWillMount() {
       this.createSocket()
-      console.log('created socket')
+      // console.log('created socket')
     }
 
     componentDidMount() {
@@ -161,8 +161,8 @@ class Canvas extends Component {
         <canvas
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
-          onMouseUp={this.handleMouseUpOrLeave}
-          onMouseLeave={this.handleMouseUpOrLeave}
+          onMouseUp={this.handleMouseUp}
+          onMouseLeave={this.handleMouseLeave}
           id="canvas"
           width="600"
           height="500">
