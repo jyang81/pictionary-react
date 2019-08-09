@@ -56,14 +56,14 @@ class App extends React.Component {
 
   getUsers() {
     let token = this.getToken()
-       fetch(usersURL, {
-        method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ' + token
-          }
-      })
+    fetch(usersURL, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
+    })
       .then(res => res.json())
       // .then(json => console.log('users:', json))
   }
@@ -109,29 +109,28 @@ class App extends React.Component {
     }
 
   loginNewUser(username) {
-       fetch(loginURL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name: username,
-          games_won: null,
-          game_id: null
-        })
-      })
-      .then(res => res.json())
-      .then(json => {
-        // console.log('login:', json)
-        if (json && json.jwt) {
-          this.saveToken(json.jwt)
-          this.getProfile()
-        }
-      })
-      .then(_ => this.getGameStatus())
-      .then(_ => this.getUsers())
-
+    fetch(loginURL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      name: username,
+      games_won: null,
+      game_id: null
+    })
+  })
+  .then(res => res.json())
+  .then(json => {
+    // console.log('login:', json)
+    if (json && json.jwt) {
+      this.saveToken(json.jwt)
+      this.getProfile()
+    }
+  })
+  .then(_ => this.getGameStatus())
+  .then(_ => this.getUsers())
   }
 
   getProfile = () => {
@@ -319,7 +318,7 @@ class App extends React.Component {
         {this.renderCanvas()}
         {this.renderChatBox()}
       </div>
-      <GameManager setGameState={this.setGameState}/>
+      <GameManager setGameState={this.setGameState} gameId={this.state.gameId}/>
     </div>
     )
   }
