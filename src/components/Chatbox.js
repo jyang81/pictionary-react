@@ -52,12 +52,13 @@ class Chatbox extends Component {
         this.setState({ chatLogs: chatLogs });
         // this.CheckChatsForWin()
       },
-      create: function(chatContent, id, username) {
+      create: function(chatContent, id, username, gameId) {
 
         this.perform('create', {
           content: chatContent,
           user_id: id,
-          user_name: username
+          user_name: username,
+          game_id: gameId
         });
       }
     });
@@ -68,7 +69,8 @@ class Chatbox extends Component {
     this.chats.create(
       this.state.currentChatMessage,
       this.props.userId,
-      this.props.username
+      this.props.username,
+      this.props.gameId
       );
     this.setState({
       currentChatMessage: ''
