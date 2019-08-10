@@ -36,9 +36,11 @@ class App extends React.Component {
       drawer: '',
       word: '',
       gamesWon: 0,
-      gameWillEnd: false
+      gameWillEnd: false,
+      usersList: []
     }
 
+    this.updateUsersList = this.updateUsersList.bind(this)
     this.resetUserState = this.resetUserState.bind(this)
     this.setGameState = this.setGameState.bind(this)
     this.loginNewUser = this.loginNewUser.bind(this)
@@ -106,6 +108,10 @@ class App extends React.Component {
         this.setState({gameWillEnd: true})
         setTimeout(() => {this.handleWin()}, 3000)
       }
+    }
+
+    updateUsersList(usersList) {
+      this.setState({ usersList })
     }
 
   loginNewUser(username) {
@@ -309,16 +315,23 @@ class App extends React.Component {
 
 
   render() {
+    const { gameJoined, gameId, username } = this.state
     return (
-     <div className="App">
-      <Header />
-      <div className="parent" >
-        {this.renderLogin()}
-        {this.renderJoinButtons() }
-        {this.renderCanvas()}
-        {this.renderChatBox()}
-      </div>
-      <GameManager setGameState={this.setGameState} gameId={this.state.gameId}/>
+      <div className="App">
+        <Header />
+        <div className="parent" >
+          {this.renderLogin()}
+          {this.renderJoinButtons() }
+          {this.renderCanvas()}
+          {this.renderChatBox()}
+        </div>
+        <GameManager 
+          setGameState={this.setGameState} 
+          gameId={gameId}
+          gameJoined={gameJoined}
+          username={username}
+          updateUsersList={this.updateUsersList}
+        />
     </div>
     )
   }
