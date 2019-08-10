@@ -43,7 +43,7 @@ class GameManager extends React.Component {
         }, {
           connected: () => {},
           received: (data) => {
-            // console.log('management data received',data)
+            console.log('management data received',data)
             if (data.command === 'updatedGameState') {
               // console.log('Game Manager:',data.command)
               // this.setState({ gameState });
