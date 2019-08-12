@@ -23,12 +23,15 @@ class GameManager extends React.Component {
     componentWillReceiveProps(nextProps) {
       if (nextProps.gameJoined === true) {
         this.handleGameJoin()
+        console.log('comrecievedProps, call handleJoin')
       }
     }
     
     handleGameJoin = () => {
       if (this.props.gameJoined === true) {
         this.manager.addUserToGame(this.props.username, this.props.gameId)
+        console.log('this.manager.addusertogame, here is props', this.props);
+        
       }
     }
 
