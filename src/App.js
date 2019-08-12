@@ -110,7 +110,11 @@ class App extends React.Component {
       }
     }
 
-    updateUsersList(usersList) {
+    updateUsersList(usersData) {
+      let usersList = []
+      usersData.forEach(user => {
+        usersList.push(user.name)
+      })
       this.setState({ usersList })
     }
 
