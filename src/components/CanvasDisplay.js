@@ -65,11 +65,11 @@ class CanvasDisplay extends Component {
 
     componentWillMount() {
       this.createSocket()
-      console.log('created socket')
+      // console.log('created socket')
     }
 
     componentDidMount() {
-      console.log('mounted')
+      // console.log('mounted')
       this.setState({
         visible: true
       })

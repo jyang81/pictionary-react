@@ -23,7 +23,7 @@ class GameManager extends React.Component {
     componentWillReceiveProps(nextProps) {
       if (nextProps.gameJoined === true && this.props.gameJoined !== nextProps.gameJoined) {
         this.handleGameJoin()
-        console.log('comrecievedProps, call handleJoin')
+        console.log('call handleJoin')
       }
     }
     
