@@ -16,6 +16,8 @@ class Chatbox extends Component {
       chatLogs: [],
       visible: false
     }
+
+    this.chatbox = React.createRef()
   }
 
   componentWillMount() {
@@ -40,6 +42,10 @@ class Chatbox extends Component {
     })
   }
 
+  updateScroll = () => {
+    this.chatbox.scrollTop = this.chatbox.scrollHeight;
+  }
+
   createSocket() {
     let cable = Cable.createConsumer(WS_URL);
     this.chats = cable.subscriptions.create({
@@ -49,7 +55,7 @@ class Chatbox extends Component {
       received: (data) => {
         let chatLogs = this.state.chatLogs;
         chatLogs.push(data);
-        this.setState({ chatLogs: chatLogs });
+        this.setState({ chatLogs: chatLogs },() => this.updateScroll());
         // this.CheckChatsForWin()
       },
       create: function(chatContent, id, username, gameId) {
@@ -112,11 +118,12 @@ class Chatbox extends Component {
 
   render() {
     const visible = this.state.visible
+
     return (
       <Transition visible={visible} duration={500}>
       <div >
         <h3>Messages</h3>
-        <div className="height-500">
+        <div className="height-500" ref={this.chatbox}>
           {this.renderChatLog()}
         </div>
         <br />
