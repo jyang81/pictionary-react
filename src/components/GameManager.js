@@ -47,7 +47,7 @@ class GameManager extends React.Component {
             if (data.command === 'updatedGameState') {
               // console.log('Game Manager:',data.command)
               // this.setState({ gameState });
-              this.props.setGameState(data.payload)
+              this.props.setGameState(data.payload[0])
             }
             else if (data.command === 'updatedUsers') {
               this.props.updateUsersList(data.payload)
