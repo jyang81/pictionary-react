@@ -16,8 +16,6 @@ class Chatbox extends Component {
       chatLogs: [],
       visible: false
     }
-
-    this.chatbox = React.createRef()
   }
 
   componentWillMount() {
@@ -43,7 +41,8 @@ class Chatbox extends Component {
   }
 
   updateScroll = () => {
-    this.chatbox.scrollTop = this.chatbox.scrollHeight;
+    let element = document.getElementById("chatbox");
+    element.scrollTop = element.scrollHeight;
   }
 
   createSocket() {
@@ -123,7 +122,7 @@ class Chatbox extends Component {
       <Transition visible={visible} duration={500}>
       <div >
         <h3>Messages</h3>
-        <div className="height-500" ref={this.chatbox}>
+        <div className="height-500" id='chatbox'>
           {this.renderChatLog()}
         </div>
         <br />
