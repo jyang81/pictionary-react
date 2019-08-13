@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Canvas from './components/Canvas';
 import CanvasDisplay from './components/CanvasDisplay';
 import Chatbox from './components/Chatbox';
-// import GameInfo from './containers/GameInfo';
+import CurrentPlayers from './containers/CurrentPlayers';
 import Login from './components/Login';
 import GameManager from './components/GameManager';
 import Profile from './components/Profile';
@@ -98,8 +98,6 @@ class App extends React.Component {
           gameAlreadyStarted: true
         })
       }
-      // console.log('here is game:',game)
-      // console.log('here is state:',this.state)
     }
 
     setGameState(status) {
@@ -108,7 +106,6 @@ class App extends React.Component {
           gameAlreadyStarted: true
         })
       }
-
       else if (status === 'End') {
         this.setState({gameWillEnd: true})
         setTimeout(() => {this.handleWin()}, 3000)
@@ -262,7 +259,7 @@ class App extends React.Component {
     }}, 1000)
   }
 
-  renderLogin() {
+  renderLoginOrProfile() {
     if (!localStorage.getItem('jwt'))  {
       return (
         <><div></div>
@@ -330,9 +327,19 @@ class App extends React.Component {
     }
   }
 
-  renderChatBox() {
+  renderChatBoxAndRoomData() {
     if (this.state.username !== '' && this.state.gameJoined) {
-      return <Chatbox username={this.state.username} userId={this.state.userId}/>
+      return (
+        <div>
+          <Chatbox 
+            gameJoined={this.state.gameJoined} 
+            username={this.state.username} 
+            userId={this.state.userId}/>
+          <CurrentPlayers
+            users={this.state.usersList}
+          />
+        </div>
+        )
     }
   }
 
@@ -343,10 +350,10 @@ class App extends React.Component {
       <div className="App">
         <Header />
         <div className="parent" >
-          {this.renderLogin()}
+          {this.renderLoginOrProfile()}
           {this.renderJoinButtons() }
           {this.renderCanvas()}
-          {this.renderChatBox()}
+          {this.renderChatBoxAndRoomData()}
         </div>
         <GameManager 
           setGameState={this.setGameState} 
@@ -361,75 +368,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-  // contructor methods??
-
-  // this.createUser('JonnyBoy')
-    // this.createGame()
-    // this.updateUser(12,6,)
-
-    //-----------------------------------------
-    // createUser(name) {
-    //   fetch(UserURL, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //       name: name,
-    //       games_won: null,
-    //       game_id: null
-    //     })
-    //   })
-    //   .then(res => res.json())
-    //   .then(json => this.updateUser(json))
-    // }
-
-    // updateUser(userId, gameId, gamesWon = null) {
-    //     fetch(UserURL + '/' + `${userId}`, {
-    //     method: 'PATCH',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //       games_won: gamesWon,
-    //       game_id: gameId
-    //     })
-    //   })
-    //   .then(res => res.json())
-    //   .then(json => console.log('patch info',json))
-    // }
-
-    // createGame() {
-    //   fetch(GamesURL, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-
-    //     })
-    //   })
-    //   .then(res => res.json())
-    //   .then(json => this.readGameId(json))
-    // }
-
-    // readGameId(game) {
-    //   console.log(game.id)
-    //   // this.removeGame(game.id)
-    // }
-
-    // removeGame(id) {
-    //   fetch(GamesURL + '/' + `${id}`, {
-    //     method: 'DELETE',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json'
-    //     }
-    //   })
-    //   .then(res => res.json())
-    //   .then(json => console.log(json))
-    // }
