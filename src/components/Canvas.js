@@ -103,6 +103,10 @@ class Canvas extends Component {
       }
     }
 
+    undo = () => {
+      this.paths.undo()
+    }
+
     clearArea = () => {
       // console.log("cleared")
       const canvas = document.getElementById('canvas');
@@ -148,6 +152,9 @@ class Canvas extends Component {
         },
         clear: function() {
           this.perform('clear');
+        },
+        undo: function() {
+          this.perform('undo');
         }
       });
     }
@@ -170,6 +177,7 @@ class Canvas extends Component {
         <br/>
         <div>
           <button className="ui button" onClick={this.clearArea}>Clear Area</button>
+          <button className="ui button" onClick={this.undo}>Undo</button>
           &nbsp;
           Line width: <select
                       className="ui selection dropdown width-4em"
