@@ -52,12 +52,14 @@ class CanvasDisplay extends Component {
     clearArea = () => {
       // console.log("cleared")
       const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2d');
-      // ctx.canvas.width = ctx.canvas.width;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      this.setState({
-        paths: []
-      })
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        // ctx.canvas.width = ctx.canvas.width;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        this.setState({
+          paths: []
+        })
+      }
     }
 
 
