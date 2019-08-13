@@ -110,9 +110,15 @@
   display: inline-block;
 }
 
-.room-containter {
-  border: black;
-  border-width: 2px;
+.room-container {
+  border: 2px solid #dedede;
+  padding: 50px;
+  margin: 10px;
+  padding: 10px;
   border-radius: 1ch;
-  
+}
+
+.current-users-title {
+  text-align: center;
+  font-size: 20px;
 }
