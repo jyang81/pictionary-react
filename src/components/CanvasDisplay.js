@@ -21,14 +21,43 @@ class CanvasDisplay extends Component {
 
 // ===========  THIS CANVAS WILL ONLY RENDER WHAT THE DRAWER DRAWS =======================
 
-    iterateOverLines = (lines) => {
-      lines.forEach(line => {
+    iterateOverLines = () => {
+      this.state.paths.forEach(line => {
         this.drawLine(line)
       })
     }
 
-    drawLine = (data) => {
+    handleLineDraw = (line) => {
+      const canvas = document.getElementById('canvas');
+      if (canvas) {
+        let paths = this.state.paths 
+        paths.push(line)
+        this.setState({ paths }, ()=>this.drawLine(line))
+      }
+    }
 
+    handleClear = () => {
+      const canvas = document.getElementById('canvas');
+      if (canvas) {
+        this.clearArea()
+        this.setState({ paths: [] })
+      }
+    }
+
+    handleUndo = () => {
+      const canvas = document.getElementById('canvas');
+      if (canvas) {
+        let paths = this.state.paths
+        console.log('here is paths before', paths);
+        paths.pop()
+        console.log('after',paths);
+        this.setState({ paths })
+        this.clearArea()
+        this.iterateOverLines()
+      }
+    }
+
+    drawLine = (data) => {
       const canvas = document.getElementById('canvas');
       if (canvas) {
         const ctx = canvas.getContext('2d');
@@ -56,23 +85,8 @@ class CanvasDisplay extends Component {
         const ctx = canvas.getContext('2d');
         // ctx.canvas.width = ctx.canvas.width;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        this.setState({
-          paths: []
-        })
       }
     }
-
-    handleUndo = () => {
-      const canvas = document.getElementById('canvas');
-      if (canvas) {
-        let paths = this.state.paths
-        console.log('here is paths before', paths);
-        paths.pop()
-        console.log('after',paths);
-        this.setState({ paths })
-      }
-    }
-
 
 // ========================================================================
 
@@ -89,7 +103,7 @@ class CanvasDisplay extends Component {
       // console.log('created socket')
       fetch(linesURL)
       .then(res => res.json())
-      .then(json => this.iterateOverLines(json))
+      .then(paths => this.setState({ paths }, () => this.iterateOverLines()))
     }
 
     componentDidMount() {
@@ -110,7 +124,7 @@ class CanvasDisplay extends Component {
           // paths.push(data);
           if (this.props.gameJoined) {
             if (data.clear) {
-              this.clearArea()
+              this.handleClear()
             }
             else if (data.undo) {
               this.handleUndo()
@@ -118,7 +132,7 @@ class CanvasDisplay extends Component {
               
             }
             else {
-            this.drawLine(data)
+              this.handleLineDraw(data)
             }
           }
         },
