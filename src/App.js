@@ -264,8 +264,8 @@ class App extends React.Component {
         <Login loginNewUser={this.loginNewUser}/>
         </>
       )
-     }
-     else {
+    }
+    else {
       return (
         <Profile
           username={this.state.username}
@@ -273,7 +273,7 @@ class App extends React.Component {
           logout={this.logout}
         />
       )
-     }
+    }
   }
 
   renderJoinButtons() {
@@ -301,12 +301,26 @@ class App extends React.Component {
   }
 
   renderCanvas() {
-    if (this.state.gameJoined) {
-      if (this.state.drawer === this.state.username) {
-        return <Canvas word={this.state.word} clearClientCanvas={this.clearClientCanvas} gameWillEnd={this.state.gameWillEnd}/>
+    const { word, gameJoined, drawer, username, gameWillEnd } = this.state
+    if (gameJoined) {
+      if (drawer === username) {
+        return (
+          <Canvas 
+            word={word} 
+            clearClientCanvas={this.clearClientCanvas} 
+            gameWillEnd={gameWillEnd}
+            gameJoined={gameJoined}
+          />
+        )
       }
       else {
-      return <CanvasDisplay drawer={this.state.drawer} gameWillEnd={this.state.gameWillEnd}/>
+        return (
+          <CanvasDisplay 
+            drawer={drawer} 
+            gameWillEnd={gameWillEnd}
+            gameJoined={gameJoined}
+          />
+        )
       }
     }
   }
