@@ -174,7 +174,7 @@ class App extends React.Component {
     })
     .then(res => res.json())
     .then(json => {
-      if (json.user.name) {
+      if (json.user) {
         this.setState({
           username: json.user.name,
           userId: json.user.id,
