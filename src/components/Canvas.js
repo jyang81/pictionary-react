@@ -105,6 +105,9 @@ class Canvas extends Component {
 
     undo = () => {
       this.paths.undo()
+      let paths = this.state.paths
+      paths.pop()
+      this.setState({ paths })
     }
 
     clearArea = () => {
