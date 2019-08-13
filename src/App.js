@@ -56,6 +56,10 @@ class App extends React.Component {
 
   }
 
+  componentWillMount() {
+    this.getGameStatus()
+  }
+
   getUsers() {
     let token = this.getToken()
     fetch(usersURL, {
