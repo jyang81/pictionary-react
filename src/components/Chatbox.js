@@ -52,9 +52,11 @@ class Chatbox extends Component {
     }, {
       connected: () => {},
       received: (data) => {
-        let chatLogs = this.state.chatLogs;
-        chatLogs.push(data);
-        this.setState({ chatLogs: chatLogs },() => this.updateScroll());
+        if (this.props.gameJoined) {
+          let chatLogs = this.state.chatLogs;
+          chatLogs.push(data);
+          this.setState({ chatLogs },() => this.updateScroll());
+        }
         // this.CheckChatsForWin()
       },
       create: function(chatContent, id, username, gameId) {
@@ -101,7 +103,7 @@ class Chatbox extends Component {
               { el.user_name }: { el.content }
             </div>
           </div>
-        )
+          )
         } else {
           return (
           <div className="ui blue message" key={`chat_${el.id}`}>
@@ -109,7 +111,7 @@ class Chatbox extends Component {
               { el.user_name }: { el.content }
             </div>
           </div>
-        )
+          )
         }
     });
   }
