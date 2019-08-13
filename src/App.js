@@ -162,26 +162,27 @@ class App extends React.Component {
     }
   })
   .then(_ => this.getGameStatus())
-  .then(_ => this.getUsers())
   }
 
   getProfile = () => {
     let token = this.getToken()
-    fetch(profileURL, {
-      headers: {
-        'Authorization': 'Bearer ' + token
-      }
-    })
-    .then(res => res.json())
-    .then(json => {
-      if (json) {
-        this.setState({
-          username: json.user.name,
-          userId: json.user.id,
-          gamesWon: json.user.games_won
-        })
-      }
-    })
+    if (token) {
+      fetch(profileURL, {
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      })
+      .then(res => res.json())
+      .then(json => {
+        if (json) {
+          this.setState({
+            username: json.user.name,
+            userId: json.user.id,
+            gamesWon: json.user.games_won
+          })
+        }
+      })
+    }
   }
 
   resetUserState() {
