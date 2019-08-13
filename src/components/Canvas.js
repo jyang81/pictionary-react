@@ -95,6 +95,17 @@ class Canvas extends Component {
 
 // ========================================================================
 
+    iterateOverPaths = () => {
+      this.state.paths.forEach(path => {
+        this.drawLine(path)
+      })
+    }
+
+    handleClear = () => {
+      this.clearArea()
+      this.setState({ paths: [] })
+    }
+
     makePath = () => {
       return {
         color: this.state.curColor,
@@ -107,7 +118,7 @@ class Canvas extends Component {
       this.paths.undo()
       let paths = this.state.paths
       paths.pop()
-      this.setState({ paths })
+      this.setState({ paths },() => this.iterateOverPaths())
     }
 
     clearArea = () => {
@@ -116,9 +127,6 @@ class Canvas extends Component {
       const ctx = canvas.getContext('2d');
       // ctx.canvas.width = ctx.canvas.width;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      this.setState({
-        paths: []
-      })
       // this.props.clearClientCanvas()
       this.paths.clear()
     }
@@ -179,7 +187,7 @@ class Canvas extends Component {
         </canvas>
         <br/>
         <div>
-          <button className="ui button" onClick={this.clearArea}>Clear Area</button>
+          <button className="ui button" onClick={this.handleClear}>Clear Area</button>
           <button className="ui button" onClick={this.undo}>Undo</button>
           &nbsp;
           Line width: <select

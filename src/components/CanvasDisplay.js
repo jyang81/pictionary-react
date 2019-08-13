@@ -21,9 +21,9 @@ class CanvasDisplay extends Component {
 
 // ===========  THIS CANVAS WILL ONLY RENDER WHAT THE DRAWER DRAWS =======================
 
-    iterateOverLines = () => {
-      this.state.paths.forEach(line => {
-        this.drawLine(line)
+    iterateOverPaths = () => {
+      this.state.paths.forEach(path => {
+        this.drawLine(path)
       })
     }
 
@@ -32,7 +32,7 @@ class CanvasDisplay extends Component {
       if (canvas) {
         let paths = this.state.paths 
         paths.push(line)
-        this.setState({ paths }, ()=>this.drawLine(line))
+        this.setState({ paths }, () => this.drawLine(line))
       }
     }
 
@@ -53,7 +53,7 @@ class CanvasDisplay extends Component {
         console.log('after',paths);
         this.setState({ paths })
         this.clearArea()
-        this.iterateOverLines()
+        this.iterateOverPaths()
       }
     }
 
@@ -103,7 +103,7 @@ class CanvasDisplay extends Component {
       // console.log('created socket')
       fetch(linesURL)
       .then(res => res.json())
-      .then(paths => this.setState({ paths }, () => this.iterateOverLines()))
+      .then(paths => this.setState({ paths }, () => this.iterateOverPaths()))
     }
 
     componentDidMount() {
