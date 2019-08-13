@@ -56,10 +56,6 @@ class App extends React.Component {
 
   }
 
-  componentWillMount() {
-    this.getGameStatus()
-  }
-
   componentDidMount() {
     this.setupWindowCloseEventListener()
   }
