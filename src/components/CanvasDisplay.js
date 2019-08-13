@@ -22,7 +22,7 @@ class CanvasDisplay extends Component {
 // ===========  THIS CANVAS WILL ONLY RENDER WHAT THE DRAWER DRAWS =======================
 
     iterateOverLines = (lines) => {
-      lines.forEarch(line => {
+      lines.forEach(line => {
         this.drawLine(line)
       })
     }
