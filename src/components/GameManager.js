@@ -25,11 +25,18 @@ class GameManager extends React.Component {
         this.handleGameJoin()
         console.log('call handleJoin')
       }
+      if (nextProps.gameJoined === false && this.props.gameJoined !== nextProps.gameJoined) {
+        this.handleGameLeave()
+      }
     }
     
     handleGameJoin = () => {
         this.manager.addUserToGame(this.props.username, this.props.gameId)
         console.log('this.manager.addusertogame, here is props', this.props);
+    }
+
+    handleGameLeave = () => {
+      this.manager.removeUserFromGame(this.props.username, this.props.gameId)
     }
 
     // sendGameState() {
