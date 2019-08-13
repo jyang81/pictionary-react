@@ -7,6 +7,7 @@ import { Transition } from 'semantic-ui-react'
 
 // == HEROKU URL ==
 const WS_URL = "wss://react-pictionary-backend.herokuapp.com/cable"
+const linesURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/lines'
 
 
 class CanvasDisplay extends Component {
@@ -20,6 +21,11 @@ class CanvasDisplay extends Component {
 
 // ===========  THIS CANVAS WILL ONLY RENDER WHAT THE DRAWER DRAWS =======================
 
+    iterateOverLines = (lines) => {
+      lines.forEarch(line => {
+        this.drawLine(line)
+      })
+    }
 
     drawLine = (data) => {
 
@@ -66,6 +72,9 @@ class CanvasDisplay extends Component {
     componentWillMount() {
       this.createSocket()
       // console.log('created socket')
+      fetch(linesURL)
+      .then(res => res.json())
+      .then(json => this.iterateOverLines(json))
     }
 
     componentDidMount() {
