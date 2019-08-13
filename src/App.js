@@ -94,7 +94,8 @@ class App extends React.Component {
         this.setState({
           gameId: game[0].id,
           drawer: game[0].drawer_name,
-          word: game[0].word
+          word: game[0].word,
+          gameAlreadyStarted: true
         })
       }
       // console.log('here is game:',game)
