@@ -4,7 +4,7 @@ export default function User(props) {
     return (
         <div className="ui blue message">
             <div className="header">
-                props.users
+                {props.user}
             </div>
         </div>
     )
