@@ -74,23 +74,6 @@ class App extends React.Component {
       })
   }
 
-
-
-  getUsers() {
-    let token = this.getToken()
-    fetch(usersURL, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + token
-      }
-    })
-      .then(res => res.json())
-      // .then(json => console.log('users:', json))
-  }
-
-
   getGameStatus() {
     let token = this.getToken()
       fetch(gamesURL, {
@@ -248,7 +231,7 @@ class App extends React.Component {
     })
     .then(res => res.json())
     .then(_ => this.resetUserState())
-    // .then(_ => this.getProfile())
+    .then(_ => this.getProfile())
   }
 
   logout() {
