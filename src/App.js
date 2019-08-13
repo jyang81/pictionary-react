@@ -259,7 +259,7 @@ class App extends React.Component {
     }}, 1000)
   }
 
-  renderLoginOrProfile() {
+  renderLoginOrProfileAndRoom() {
     if (!localStorage.getItem('jwt'))  {
       return (
         <><div></div>
@@ -269,11 +269,19 @@ class App extends React.Component {
     }
     else {
       return (
-        <Profile
-          username={this.state.username}
-          gamesWon={this.state.gamesWon}
-          logout={this.logout}
-        />
+        <div>
+          <Profile
+            username={this.state.username}
+            gamesWon={this.state.gamesWon}
+            logout={this.logout}
+          />
+          {this.state.gameJoined ? 
+            <CurrentPlayers
+                users={this.state.usersList}
+            /> :
+            null
+            }
+        </div>
       )
     }
   }
@@ -327,7 +335,7 @@ class App extends React.Component {
     }
   }
 
-  renderChatBoxAndRoomData() {
+  renderChatBox() {
     if (this.state.username !== '' && this.state.gameJoined) {
       return (
         <div>
@@ -335,9 +343,6 @@ class App extends React.Component {
             gameJoined={this.state.gameJoined} 
             username={this.state.username} 
             userId={this.state.userId}/>
-          <CurrentPlayers
-            users={this.state.usersList}
-          />
         </div>
         )
     }
@@ -350,10 +355,10 @@ class App extends React.Component {
       <div className="App">
         <Header />
         <div className="parent" >
-          {this.renderLoginOrProfile()}
+          {this.renderLoginOrProfileAndRoom()}
           {this.renderJoinButtons() }
           {this.renderCanvas()}
-          {this.renderChatBoxAndRoomData()}
+          {this.renderChatBox()}
         </div>
         <GameManager 
           setGameState={this.setGameState} 

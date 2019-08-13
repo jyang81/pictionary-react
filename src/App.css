@@ -109,3 +109,10 @@
 .drawIcon {
   display: inline-block;
 }
+
+.room-containter {
+  border: black;
+  border-width: 2px;
+  border-radius: 1ch;
+  
+}

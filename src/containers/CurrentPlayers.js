@@ -7,7 +7,7 @@ export default function CurrentPlayers(props) {
         <div className='room-container'>
             {props.users.map(user => {
                 return (
-                    <User user={user}/>
+                    <User key={user} user={user}/>
                 )
             })}
         </div>
