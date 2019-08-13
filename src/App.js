@@ -60,6 +60,23 @@ class App extends React.Component {
     this.getGameStatus()
   }
 
+  componentDidMount() {
+    this.setupWindowCloseEventListener()
+  }
+
+  setupWindowCloseEventListener = () => {
+    window.addEventListener("beforeunload", (ev) => {
+      ev.preventDefault();
+      return this.exitGameBeforePageClose();
+    });
+  }
+
+  exitGameBeforePageClose = () => {
+    this.setState({ gameJoined: false })
+  }
+
+
+
   getUsers() {
     let token = this.getToken()
     fetch(usersURL, {
