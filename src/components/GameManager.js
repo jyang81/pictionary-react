@@ -23,7 +23,7 @@ class GameManager extends React.Component {
     componentWillReceiveProps(nextProps) {
       if (nextProps.gameJoined === true && this.props.gameJoined !== nextProps.gameJoined) {
         this.handleGameJoin()
-        console.log('call handleJoin')
+//         console.log('call handleJoin')
       }
       if (nextProps.gameJoined === false && this.props.gameJoined !== nextProps.gameJoined) {
         this.handleGameLeave()
@@ -32,7 +32,7 @@ class GameManager extends React.Component {
     
     handleGameJoin = () => {
         this.manager.addUserToGame(this.props.username, this.props.gameId)
-        console.log('this.manager.addusertogame, here is props', this.props);
+//         console.log('this.manager.addusertogame, here is props', this.props);
     }
 
     handleGameLeave = () => {
@@ -50,7 +50,7 @@ class GameManager extends React.Component {
         }, {
           connected: () => {},
           received: (data) => {
-            console.log('management data received',data)
+//             console.log('management data received',data)
             if (data.command === 'updatedGameState') {
               // console.log('Game Manager:',data.command)
               // this.setState({ gameState });
