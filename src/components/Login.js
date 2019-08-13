@@ -6,7 +6,7 @@ class Login extends React.Component {
         super(props);
         this.state = { 
             visible: false
-         }
+        }
 
         this.handleSubmit = this.handleSubmit.bind(this)
         this.username = React.createRef()
@@ -42,7 +42,7 @@ class Login extends React.Component {
                 </form>
             </div>
             </Transition>
-         );
+        );
     }
 }
 

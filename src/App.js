@@ -262,7 +262,7 @@ class App extends React.Component {
   }
 
   renderLogin() {
-    if (this.state.username === '')  {
+    if (!localStorage.getItem('jwt'))  {
       return (
         <><div></div>
         <Login loginNewUser={this.loginNewUser}/>
