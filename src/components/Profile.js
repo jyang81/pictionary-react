@@ -33,7 +33,7 @@ class Profile extends React.Component {
                         </div>
                         <div className="extra content">
                             <i className="trophy icon"></i>
-                            Games Won: {this.props.gamesWon}
+                            Games Won: {this.props.gamesWon === null ? 0 : this.props.gamesWon}
                             <br></br><br></br>
                             <button onClick={() => this.handleLogout()} className="ui button">Logout</button>
                         </div>
