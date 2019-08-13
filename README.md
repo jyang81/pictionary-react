@@ -29,8 +29,8 @@ React Pictionary is a realtime multiplayer drawing game. One person draws while 
 
  - Automatically assign the drawer to the next person in the game
  - Add a timer for each round
- ~~- Display current players list~~
- ~~- Undo button~~
+ - ~~Display current players list~~
+ - ~~Undo button~~
  - Add more words
  - improve drawing tools (slider for brush size/clickable color picker)
 
