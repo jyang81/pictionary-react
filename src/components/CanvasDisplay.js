@@ -62,6 +62,15 @@ class CanvasDisplay extends Component {
       }
     }
 
+    handleUndo = () => {
+      const canvas = document.getElementById('canvas');
+      if (canvas) {
+        let paths = this.state.paths
+        paths.pop()
+        this.setState({ paths })
+      }
+    }
+
 
 // ========================================================================
 
@@ -100,6 +109,9 @@ class CanvasDisplay extends Component {
           if (this.props.gameJoined) {
             if (data.clear) {
               this.clearArea()
+            }
+            else if (data.undo) {
+              this.handleUndo()
             }
             else {
             this.drawLine(data)
