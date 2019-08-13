@@ -30,21 +30,23 @@ class CanvasDisplay extends Component {
     drawLine = (data) => {
 
       const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2d');
-      ctx.save();
-      ctx.lineJoin = "round";
-      ctx.lineCap = "round";
-      ctx.lineWidth = data.strokeWidth;
-      ctx.strokeStyle = data.color;
-      ctx.beginPath();
-      const c = data.coordinates;
-      ctx.moveTo(c[0], c[1]);
-      for (let i = 2; i < c.length; i += 2) {
-        ctx.lineTo(c[i], c[i+1]);
-      }
-      // ctx.closePath();
-      ctx.stroke();
-      ctx.restore();
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        ctx.save();
+        ctx.lineJoin = "round";
+        ctx.lineCap = "round";
+        ctx.lineWidth = data.strokeWidth;
+        ctx.strokeStyle = data.color;
+        ctx.beginPath();
+        const c = data.coordinates;
+        ctx.moveTo(c[0], c[1]);
+        for (let i = 2; i < c.length; i += 2) {
+          ctx.lineTo(c[i], c[i+1]);
+        }
+        // ctx.closePath();
+        ctx.stroke();
+        ctx.restore();
+      }  
     };
 
     clearArea = () => {
