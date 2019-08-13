@@ -72,7 +72,10 @@ class App extends React.Component {
   }
 
   exitGameBeforePageClose = () => {
-    this.setState({ gameJoined: false })
+    this.setState({ gameJoined: false }, 
+      () => {
+        this.removeToken()
+      })
   }
 
 
