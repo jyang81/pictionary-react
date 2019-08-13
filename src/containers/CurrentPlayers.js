@@ -1,12 +1,11 @@
 import React from 'react'
-import User from '../components/user'
+import User from '../components/User'
 
 export default function CurrentPlayers(props) {
 
-    const { users } = props.users
     return (
         <div className='room-container'>
-            {users.map(user => {
+            {props.users.map(user => {
                 return (
                     <User user={user}/>
                 )
