@@ -73,12 +73,14 @@ class Chatbox extends Component {
 
   handleSendEvent(ev) {
     ev.preventDefault();
-    this.chats.create(
-      this.state.currentChatMessage,
-      this.props.userId,
-      this.props.username,
-      this.props.gameId
+    if (this.state.currentChatMessage !== '') {
+      this.chats.create(
+        this.state.currentChatMessage,
+        this.props.userId,
+        this.props.username,
+        this.props.gameId
       );
+    }
     this.setState({
       currentChatMessage: ''
     });
