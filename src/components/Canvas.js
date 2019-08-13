@@ -40,11 +40,11 @@ class Canvas extends Component {
       let y = ev.clientY - ctx.canvas.offsetTop
       let p = this.state.paths
       p[p.length - 1].coordinates.push(x,y)
-      this.drawLine(p)
+      this.drawPartialLine(p)
     }
   }
 
-  drawLine = (p) => {
+  drawPartialLine = (p) => {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     ctx.save();
@@ -61,6 +61,27 @@ class Canvas extends Component {
     ctx.stroke();
     ctx.restore();
   }
+
+  drawFullLine = (data) => {
+    const canvas = document.getElementById('canvas');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      ctx.save();
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
+      ctx.lineWidth = data.strokeWidth;
+      ctx.strokeStyle = data.color;
+      ctx.beginPath();
+      const c = data.coordinates;
+      ctx.moveTo(c[0], c[1]);
+      for (let i = 2; i < c.length; i += 2) {
+        ctx.lineTo(c[i], c[i+1]);
+      }
+      // ctx.closePath();
+      ctx.stroke();
+      ctx.restore();
+    }  
+  };
 
   handleMouseUp = (ev) => {
     // console.log("mouse up")
@@ -97,13 +118,14 @@ class Canvas extends Component {
 
     iterateOverPaths = () => {
       this.state.paths.forEach(path => {
-        this.drawLine(path)
+        this.drawFullLine(path)
       })
     }
 
     handleClear = () => {
       this.clearArea()
       this.setState({ paths: [] })
+      this.paths.clear()
     }
 
     makePath = () => {
@@ -118,7 +140,10 @@ class Canvas extends Component {
       this.paths.undo()
       let paths = this.state.paths
       paths.pop()
-      this.setState({ paths },() => this.iterateOverPaths())
+      this.setState({ paths },() => {
+        this.clearArea()
+        this.iterateOverPaths()
+      })
     }
 
     clearArea = () => {
@@ -128,7 +153,6 @@ class Canvas extends Component {
       // ctx.canvas.width = ctx.canvas.width;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       // this.props.clearClientCanvas()
-      this.paths.clear()
     }
 
     componentWillMount() {
