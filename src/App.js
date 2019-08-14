@@ -217,14 +217,16 @@ class App extends React.Component {
       })
     })
     .then(res => res.json())
-    .then(game => this.setState({
-      gameAlreadyStarted: true,
-      gameJoined: true,
-      gameId: game.id,
-      drawer: this.state.username,
-      word: game.word
-    }))
-}
+    .then(game => {
+      this.setState({
+        gameAlreadyStarted: true,
+        gameJoined: true,
+        gameId: game.id,
+        drawer: game.drawer_name,
+        word: game.word
+      })
+    })
+  }
 
   joinGame() {
     this.getGameStatus()
@@ -372,7 +374,7 @@ class App extends React.Component {
         <Header />
         <div className="parent" >
           {this.renderLoginOrProfileAndRoom()}
-          {this.renderJoinButtons() }
+          {this.renderJoinButtons()}
           {this.renderCanvas()}
           {this.renderChatBox()}
         </div>
