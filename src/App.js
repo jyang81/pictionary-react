@@ -127,7 +127,7 @@ class App extends React.Component {
       'Accept': 'application/json'
     },
     body: JSON.stringify({
-      name: username,
+      name: username
     })
   })
   .then(res => res.json())
