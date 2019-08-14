@@ -152,6 +152,7 @@ class Canvas extends Component {
       const ctx = canvas.getContext('2d');
       // ctx.canvas.width = ctx.canvas.width;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      this.setState({ paths: []})
       // this.props.clearClientCanvas()
     }
 
@@ -168,7 +169,8 @@ class Canvas extends Component {
 
     componentWillUnmount() {
       this.setState({
-        visible: false
+        visible: false,
+        paths: []
       })
     }
 
