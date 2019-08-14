@@ -19,7 +19,7 @@ import Profile from './components/Profile';
 
 // ======= HEROKU URLS =============
 const gamesURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/games'
-const usersURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/users'
+// const usersURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/users'
 const loginURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/login'
 const profileURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/profile'
 
@@ -134,13 +134,22 @@ class App extends React.Component {
   })
   .then(res => res.json())
   .then(json => {
-    // console.log('login:', json)
+    console.log('login:', json)
     if (json && json.jwt) {
       this.saveToken(json.jwt)
-      this.getProfile()
+      this.setState({
+        username: json.user.name,
+        userId: json.user.id,
+        gamesWon: json.user.games_won
+      },() => {
+        this.getGameStatus()
+      })
+    }
+    else if (json.message) {
+      throw new Error (json.message)
     }
   })
-  .then(_ => this.getGameStatus())
+  .catch((error) => {console.log(error)})
   }
 
   getProfile = () => {
