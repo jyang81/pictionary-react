@@ -162,13 +162,14 @@ class App extends React.Component {
       })
       .then(res => res.json())
       .then(json => {
-        if (json) {
-          this.setState({
-            username: json.user.name,
-            userId: json.user.id,
-            gamesWon: json.user.games_won
-          })
-        }
+        // if (json) {
+        //   this.setState({
+        //     username: json.user.name,
+        //     userId: json.user.id,
+        //     gamesWon: json.user.games_won
+        //   })
+        // }
+        console.log('here is get profile return',json);
       })
     }
   }
