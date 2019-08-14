@@ -128,8 +128,6 @@ class App extends React.Component {
     },
     body: JSON.stringify({
       name: username,
-      games_won: null,
-      game_id: null
     })
   })
   .then(res => res.json())
