@@ -160,17 +160,24 @@ class App extends React.Component {
           'Authorization': 'Bearer ' + token
         }
       })
-      .then(res => res.json())
-      .then(json => {
-        // if (json) {
-        //   this.setState({
-        //     username: json.user.name,
-        //     userId: json.user.id,
-        //     gamesWon: json.user.games_won
-        //   })
-        // }
-        console.log('here is get profile return',json);
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        }
+        else {
+          throw new Error(res)
+        }
       })
+      .then(json => {
+        if (json) {
+          this.setState({
+            username: json.user.name,
+            userId: json.user.id,
+            gamesWon: json.user.games_won
+          })
+        }
+      })
+      .catch((error) => console.log(error))
     }
   }
 
