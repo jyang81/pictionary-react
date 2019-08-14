@@ -91,14 +91,14 @@ class Chatbox extends Component {
   // }
 
   // checkForWin(message) {
-  //   if (message.user_name === 'EvilHost' && message.content.substring(0,17) === 'Attention please,') {
+  //   if (message.user_name === 'Game Host' && message.content.substring(0,17) === 'Attention please,') {
   //      setTimeout(() => this.props.handleWin(),5000)
   //   }
   // }
 
   renderChatLog() {
     return this.state.chatLogs.map((el) => {
-        if (el.user_name === "EvilHost") {
+        if (el.user_name === "Game Host") {
           return (
           <div className="ui green message" key={`chat_${el.id}`}>
             <div className="header">

@@ -264,8 +264,8 @@ class App extends React.Component {
       this.endGame()
     }
     else {
-      this.resetUserState()
       this.getProfile()
+      this.resetUserState()
     }}, 1000)
   }
 
