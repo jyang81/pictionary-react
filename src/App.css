@@ -75,6 +75,15 @@
   padding: 1em;
 }
 
+.room-containter {
+  height: 300px;
+  overflow: auto;
+  position: relative;
+  bottom: 0;
+  background-color: rgba(4, 187, 219, 0.1);
+  padding: 1em;
+}
+
 .img-flip {
   -moz-transform: scaleX(-1);
   -o-transform: scaleX(-1);
@@ -99,4 +108,17 @@
 
 .drawIcon {
   display: inline-block;
+}
+
+.room-container {
+  border: 2px solid #dedede;
+  padding: 50px;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 1ch;
+}
+
+.current-users-title {
+  text-align: center;
+  font-size: 20px;
 }

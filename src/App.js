@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Canvas from './components/Canvas';
 import CanvasDisplay from './components/CanvasDisplay';
 import Chatbox from './components/Chatbox';
-// import GameInfo from './containers/GameInfo';
+import CurrentPlayers from './containers/CurrentPlayers';
 import Login from './components/Login';
 import GameManager from './components/GameManager';
 import Profile from './components/Profile';
@@ -19,7 +19,7 @@ import Profile from './components/Profile';
 
 // ======= HEROKU URLS =============
 const gamesURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/games'
-const usersURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/users'
+// const usersURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/users'
 const loginURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/login'
 const profileURL = 'https://react-pictionary-backend.herokuapp.com/api/v1/profile'
 
@@ -36,9 +36,11 @@ class App extends React.Component {
       drawer: '',
       word: '',
       gamesWon: 0,
-      gameWillEnd: false
+      gameWillEnd: false,
+      usersList: []
     }
 
+    this.updateUsersList = this.updateUsersList.bind(this)
     this.resetUserState = this.resetUserState.bind(this)
     this.setGameState = this.setGameState.bind(this)
     this.loginNewUser = this.loginNewUser.bind(this)
@@ -54,20 +56,23 @@ class App extends React.Component {
 
   }
 
-  getUsers() {
-    let token = this.getToken()
-       fetch(usersURL, {
-        method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ' + token
-          }
-      })
-      .then(res => res.json())
-      // .then(json => console.log('users:', json))
+  componentDidMount() {
+    this.setupWindowCloseEventListener()
   }
 
+  setupWindowCloseEventListener = () => {
+    window.addEventListener("beforeunload", (ev) => {
+      ev.preventDefault();
+      return this.exitGameBeforePageClose();
+    });
+  }
+
+  exitGameBeforePageClose = () => {
+    this.setState({ gameJoined: false }, 
+      () => {
+        this.removeToken()
+      })
+  }
 
   getGameStatus() {
     let token = this.getToken()
@@ -88,11 +93,10 @@ class App extends React.Component {
         this.setState({
           gameId: game[0].id,
           drawer: game[0].drawer_name,
-          word: game[0].word
+          word: game[0].word,
+          gameAlreadyStarted: true
         })
       }
-      // console.log('here is game:',game)
-      // console.log('here is state:',this.state)
     }
 
     setGameState(status) {
@@ -101,55 +105,78 @@ class App extends React.Component {
           gameAlreadyStarted: true
         })
       }
-
       else if (status === 'End') {
         this.setState({gameWillEnd: true})
         setTimeout(() => {this.handleWin()}, 3000)
       }
     }
 
+    updateUsersList(usersData) {
+      let usersList = []
+      usersData.forEach(user => {
+        usersList.push(user.name)
+      })
+      this.setState({ usersList })
+    }
+
   loginNewUser(username) {
-       fetch(loginURL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name: username,
-          games_won: null,
-          game_id: null
-        })
-      })
-      .then(res => res.json())
-      .then(json => {
-        // console.log('login:', json)
-        if (json && json.jwt) {
-          this.saveToken(json.jwt)
-          this.getProfile()
-        }
-      })
-      .then(_ => this.getGameStatus())
-      .then(_ => this.getUsers())
-
-  }
-
-  getProfile = () => {
-    let token = this.getToken()
-    fetch(profileURL, {
-      headers: {
-        'Authorization': 'Bearer ' + token
-      }
+    fetch(loginURL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      name: username
     })
-    .then(res => res.json())
-    .then(json => {
-      // console.log('profile:', json)
+  })
+  .then(res => res.json())
+  .then(json => {
+    console.log('login:', json)
+    if (json && json.jwt) {
+      this.saveToken(json.jwt)
       this.setState({
         username: json.user.name,
         userId: json.user.id,
         gamesWon: json.user.games_won
+      },() => {
+        this.getGameStatus()
       })
-    })
+    }
+    else if (json.message) {
+      throw new Error (json.message)
+    }
+  })
+  .catch((error) => {console.log(error)})
+  }
+
+  getProfile = () => {
+    let token = this.getToken()
+    if (token) {
+      fetch(profileURL, {
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      })
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        }
+        else {
+          throw new Error(res)
+        }
+      })
+      .then(json => {
+        if (json) {
+          this.setState({
+            username: json.user.name,
+            userId: json.user.id,
+            gamesWon: json.user.games_won
+          })
+        }
+      })
+      .catch((error) => console.log(error))
+    }
   }
 
   resetUserState() {
@@ -190,14 +217,16 @@ class App extends React.Component {
       })
     })
     .then(res => res.json())
-    .then(game => this.setState({
-      gameAlreadyStarted: true,
-      gameJoined: true,
-      gameId: game.id,
-      drawer: this.state.username,
-      word: game.word
-    }))
-}
+    .then(game => {
+      this.setState({
+        gameAlreadyStarted: true,
+        gameJoined: true,
+        gameId: game.id,
+        drawer: game.drawer_name,
+        word: game.word
+      })
+    })
+  }
 
   joinGame() {
     this.getGameStatus()
@@ -219,7 +248,7 @@ class App extends React.Component {
     })
     .then(res => res.json())
     .then(_ => this.resetUserState())
-    // .then(_ => this.getProfile())
+    .then(_ => this.getProfile())
   }
 
   logout() {
@@ -243,28 +272,36 @@ class App extends React.Component {
       this.endGame()
     }
     else {
-      this.resetUserState()
       this.getProfile()
+      this.resetUserState()
     }}, 1000)
   }
 
-  renderLogin() {
-    if (this.state.username === '')  {
+  renderLoginOrProfileAndRoom() {
+    if (!localStorage.getItem('jwt'))  {
       return (
         <><div></div>
         <Login loginNewUser={this.loginNewUser}/>
         </>
       )
-     }
-     else {
+    }
+    else {
       return (
-        <Profile
-          username={this.state.username}
-          gamesWon={this.state.gamesWon}
-          logout={this.logout}
-        />
+        <div>
+          <Profile
+            username={this.state.username}
+            gamesWon={this.state.gamesWon}
+            logout={this.logout}
+          />
+          {this.state.gameJoined ? 
+            <CurrentPlayers
+                users={this.state.usersList}
+            /> :
+            null
+            }
+        </div>
       )
-     }
+    }
   }
 
   renderJoinButtons() {
@@ -292,109 +329,65 @@ class App extends React.Component {
   }
 
   renderCanvas() {
-    if (this.state.gameJoined) {
-      if (this.state.drawer === this.state.username) {
-        return <Canvas word={this.state.word} clearClientCanvas={this.clearClientCanvas} gameWillEnd={this.state.gameWillEnd}/>
+    const { word, gameJoined, drawer, username, gameWillEnd } = this.state
+    if (gameJoined) {
+      if (drawer === username) {
+        return (
+          <Canvas 
+            word={word} 
+            clearClientCanvas={this.clearClientCanvas} 
+            gameWillEnd={gameWillEnd}
+            gameJoined={gameJoined}
+          />
+        )
       }
       else {
-      return <CanvasDisplay drawer={this.state.drawer} gameWillEnd={this.state.gameWillEnd}/>
+        return (
+          <CanvasDisplay 
+            drawer={drawer} 
+            gameWillEnd={gameWillEnd}
+            gameJoined={gameJoined}
+          />
+        )
       }
     }
   }
 
   renderChatBox() {
     if (this.state.username !== '' && this.state.gameJoined) {
-      return <Chatbox username={this.state.username} userId={this.state.userId}/>
+      return (
+        <div>
+          <Chatbox 
+            gameJoined={this.state.gameJoined} 
+            username={this.state.username} 
+            userId={this.state.userId}/>
+        </div>
+        )
     }
   }
 
 
   render() {
+    const { gameJoined, gameId, username } = this.state
     return (
-     <div className="App">
-      <Header />
-      <div className="parent" >
-        {this.renderLogin()}
-        {this.renderJoinButtons() }
-        {this.renderCanvas()}
-        {this.renderChatBox()}
-      </div>
-      <GameManager setGameState={this.setGameState}/>
+      <div className="App">
+        <Header />
+        <div className="parent" >
+          {this.renderLoginOrProfileAndRoom()}
+          {this.renderJoinButtons()}
+          {this.renderCanvas()}
+          {this.renderChatBox()}
+        </div>
+        <GameManager 
+          setGameState={this.setGameState} 
+          gameId={gameId}
+          gameJoined={gameJoined}
+          username={username}
+          updateUsersList={this.updateUsersList}
+        />
     </div>
     )
   }
 }
 
 export default App;
-
-  // contructor methods??
-
-  // this.createUser('JonnyBoy')
-    // this.createGame()
-    // this.updateUser(12,6,)
-
-    //-----------------------------------------
-    // createUser(name) {
-    //   fetch(UserURL, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //       name: name,
-    //       games_won: null,
-    //       game_id: null
-    //     })
-    //   })
-    //   .then(res => res.json())
-    //   .then(json => this.updateUser(json))
-    // }
-
-    // updateUser(userId, gameId, gamesWon = null) {
-    //     fetch(UserURL + '/' + `${userId}`, {
-    //     method: 'PATCH',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //       games_won: gamesWon,
-    //       game_id: gameId
-    //     })
-    //   })
-    //   .then(res => res.json())
-    //   .then(json => console.log('patch info',json))
-    // }
-
-    // createGame() {
-    //   fetch(GamesURL, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-
-    //     })
-    //   })
-    //   .then(res => res.json())
-    //   .then(json => this.readGameId(json))
-    // }
-
-    // readGameId(game) {
-    //   console.log(game.id)
-    //   // this.removeGame(game.id)
-    // }
-
-    // removeGame(id) {
-    //   fetch(GamesURL + '/' + `${id}`, {
-    //     method: 'DELETE',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json'
-    //     }
-    //   })
-    //   .then(res => res.json())
-    //   .then(json => console.log(json))
-    // }

@@ -40,6 +40,11 @@ class Chatbox extends Component {
     })
   }
 
+  updateScroll = () => {
+    let element = document.getElementById("chatbox");
+    element.scrollTop = element.scrollHeight;
+  }
+
   createSocket() {
     let cable = Cable.createConsumer(WS_URL);
     this.chats = cable.subscriptions.create({
@@ -47,17 +52,20 @@ class Chatbox extends Component {
     }, {
       connected: () => {},
       received: (data) => {
-        let chatLogs = this.state.chatLogs;
-        chatLogs.push(data);
-        this.setState({ chatLogs: chatLogs });
+        if (this.props.gameJoined) {
+          let chatLogs = this.state.chatLogs;
+          chatLogs.push(data);
+          this.setState({ chatLogs },() => this.updateScroll());
+        }
         // this.CheckChatsForWin()
       },
-      create: function(chatContent, id, username) {
+      create: function(chatContent, id, username, gameId) {
 
         this.perform('create', {
           content: chatContent,
           user_id: id,
-          user_name: username
+          user_name: username,
+          game_id: gameId
         });
       }
     });
@@ -65,11 +73,14 @@ class Chatbox extends Component {
 
   handleSendEvent(ev) {
     ev.preventDefault();
-    this.chats.create(
-      this.state.currentChatMessage,
-      this.props.userId,
-      this.props.username
+    if (this.state.currentChatMessage !== '') {
+      this.chats.create(
+        this.state.currentChatMessage,
+        this.props.userId,
+        this.props.username,
+        this.props.gameId
       );
+    }
     this.setState({
       currentChatMessage: ''
     });
@@ -80,21 +91,21 @@ class Chatbox extends Component {
   // }
 
   // checkForWin(message) {
-  //   if (message.user_name === 'EvilHost' && message.content.substring(0,17) === 'Attention please,') {
+  //   if (message.user_name === 'Game Host' && message.content.substring(0,17) === 'Attention please,') {
   //      setTimeout(() => this.props.handleWin(),5000)
   //   }
   // }
 
   renderChatLog() {
     return this.state.chatLogs.map((el) => {
-        if (el.user_name === "EvilHost") {
+        if (el.user_name === "Game Host") {
           return (
           <div className="ui green message" key={`chat_${el.id}`}>
             <div className="header">
               { el.user_name }: { el.content }
             </div>
           </div>
-        )
+          )
         } else {
           return (
           <div className="ui blue message" key={`chat_${el.id}`}>
@@ -102,7 +113,7 @@ class Chatbox extends Component {
               { el.user_name }: { el.content }
             </div>
           </div>
-        )
+          )
         }
     });
   }
@@ -110,11 +121,12 @@ class Chatbox extends Component {
 
   render() {
     const visible = this.state.visible
+
     return (
       <Transition visible={visible} duration={500}>
       <div >
         <h3>Messages</h3>
-        <div className="height-500">
+        <div className="height-500" id='chatbox'>
           {this.renderChatLog()}
         </div>
         <br />

@@ -10,15 +10,11 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({
-          visible: true
-        })
+        this.setState({ visible: true })
     }
 
     handleLogout() {
-        this.setState({
-            visible: false
-        })
+        this.setState({ visible: false })
         this.props.logout()
     }
 
@@ -26,23 +22,23 @@ class Profile extends React.Component {
         const visible = this.state.visible
         return (
             <Transition visible={visible} duration={600}>
-            <div className="width-250 ui small scale visible transition">
-            <div className="ui card">
-                <div className="content">
-                <div className="meta">
-                    <span className="date">Username:</span>
+                <div className="width-250 ui small scale visible transition">
+                    <div className="ui card">
+                        <div className="content">
+                        <div className="meta">
+                            <span className="date">Username:</span>
+                        </div>
+                        <br></br>
+                        <a href="/" className="header">{this.props.username}</a>
+                        </div>
+                        <div className="extra content">
+                            <i className="trophy icon"></i>
+                            Games Won: {this.props.gamesWon === null ? 0 : this.props.gamesWon}
+                            <br></br><br></br>
+                            <button onClick={() => this.handleLogout()} className="ui button">Logout</button>
+                        </div>
+                    </div>
                 </div>
-                <br></br>
-                <a href="/" className="header">{this.props.username}</a>
-                </div>
-                <div className="extra content">
-                    <i className="trophy icon"></i>
-                    Games Won: {this.props.gamesWon}
-                    <br></br><br></br>
-                    <button onClick={() => this.handleLogout()} className="ui button">Logout</button>
-                </div>
-            </div>
-            </div>
             </Transition>
             );
         }
