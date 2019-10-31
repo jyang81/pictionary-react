@@ -30,7 +30,7 @@ class CanvasDisplay extends Component {
     handleLineDraw = (line) => {
       const canvas = document.getElementById('canvas');
       if (canvas) {
-        let paths = this.state.paths 
+        let paths = this.state.paths
         paths.push(line)
         this.setState({ paths }, () => this.drawLine(line))
       }
@@ -75,7 +75,7 @@ class CanvasDisplay extends Component {
         // ctx.closePath();
         ctx.stroke();
         ctx.restore();
-      }  
+      }
     };
 
     clearArea = () => {
@@ -129,7 +129,7 @@ class CanvasDisplay extends Component {
             else if (data.undo) {
               this.handleUndo()
               console.log('undo received');
-              
+
             }
             else {
               this.handleLineDraw(data)
@@ -163,9 +163,10 @@ class CanvasDisplay extends Component {
     // if (this.props.gameWillEnd) {this.transitionOut()}
     return (
       <Transition visible={visible} duration={1000}>
-        <div className="ui small scale visible transition">
+      <div className="div2 ui small scale visible transition">
           <div className="word"><i className="pencil alternate icon drawIcon"></i> {this.props.drawer} is Drawing</div>
           <canvas
+            className="canvas-display"
             id="canvas"
             width="600"
             height="500">
