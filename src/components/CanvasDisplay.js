@@ -48,9 +48,9 @@ class CanvasDisplay extends Component {
       const canvas = document.getElementById('canvas');
       if (canvas) {
         let paths = this.state.paths
-        console.log('here is paths before', paths);
+        // console.log('here is paths before', paths);
         paths.pop()
-        console.log('after',paths);
+        // console.log('after',paths);
         this.setState({ paths })
         this.clearArea()
         this.iterateOverPaths()
@@ -128,7 +128,7 @@ class CanvasDisplay extends Component {
             }
             else if (data.undo) {
               this.handleUndo()
-              console.log('undo received');
+              // console.log('undo received');
 
             }
             else {
