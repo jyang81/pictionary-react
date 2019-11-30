@@ -126,7 +126,7 @@ class Chatbox extends Component {
       <Transition visible={visible} duration={500}>
       <div >
         <h3>Messages</h3>
-        <div className="height-500" id='chatbox'>
+        <div id='chatbox'>
           {this.renderChatLog()}
         </div>
         <br />

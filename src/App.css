@@ -66,7 +66,7 @@
   min-width: 4em !important;
 }
 
-.height-500 {
+#chatbox {
   height: 500px;
   overflow: auto;
   position: relative;
@@ -111,15 +111,11 @@
 }
 
 .room-container {
-  border: 1px solid #dedede;
-  margin-top: 3em;
+  border: 1.5px solid #dedede;
+  margin-top: 2em;
   padding: 2em;
   width: 250px;
   border-radius: 5px;
+  overflow: auto;
 }
 
-.current-users-title {
-  text-align: center;
-  font-size: 2em;
-  font-weight: bold;
-}

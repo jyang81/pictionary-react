@@ -29,7 +29,7 @@ class Profile extends React.Component {
                             <span className="date">Username:</span>
                         </div>
                         <br></br>
-                        <a href="/" className="header">{this.props.username}</a>
+                        <h3 className="header">{this.props.username}</h3>
                         </div>
                         <div className="extra content">
                             <i className="trophy icon"></i>
