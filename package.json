@@ -1,4 +1,8 @@
 {
+  "engines": {
+    "node": "11.10.1",
+    "npm": "6.7.0"
+  },
   "name": "pictionary",
   "version": "0.1.0",
   "private": true,
@@ -6,6 +10,7 @@
     "actioncable": "^5.2.3",
     "actioncable-client-react": "^1.0.3",
     "diff": ">=3.5.0",
+    "gulp": "^4.0.2",
     "lodash": "^4.17.15",
     "lodash.template": ">=4.5.0",
     "react": "^16.8.6",

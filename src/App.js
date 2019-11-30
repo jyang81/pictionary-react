@@ -47,7 +47,6 @@ class App extends React.Component {
     this.createGame = this.createGame.bind(this)
     this.handleWin = this.handleWin.bind(this)
     this.joinGame = this.joinGame.bind(this)
-    this.endGame = this.endGame.bind(this)
     this.logout = this.logout.bind(this)
 
     if (this.getToken()) {
@@ -235,22 +234,6 @@ class App extends React.Component {
     })
   }
 
-  endGame() {
-    let id = this.state.gameId
-    let token = this.getToken()
-    fetch(`${gamesURL}/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + token
-      }
-    })
-    .then(res => res.json())
-    .then(_ => this.resetUserState())
-    .then(_ => this.getProfile())
-  }
-
   logout() {
     setTimeout(() => {
       this.removeToken()
@@ -268,13 +251,9 @@ class App extends React.Component {
 
   handleWin() {
     setTimeout(() => {
-    if (this.state.username === this.state.drawer) {
-      this.endGame()
-    }
-    else {
       this.getProfile()
       this.resetUserState()
-    }}, 1000)
+    }, 1000);
   }
 
   renderLoginOrProfileAndRoom() {

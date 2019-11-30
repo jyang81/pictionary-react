@@ -11,7 +11,7 @@ class Players extends React.Component {
 
     componentDidMount() {
         this.setState({
-          visible: true
+            visible: true
         })
     }
 
@@ -26,21 +26,20 @@ class Players extends React.Component {
         const visible = this.state.visible
         return (
             <Transition visible={visible} duration={600}>
-            <div className="div4 ui small scale visible transition">
-            <div className="ui card">
-                <div className="content">
-                <div className="meta">
-                    <span className="date">Current players:</span>
+                <div className="div4 ui small scale visible transition">
+                    <div className="ui card">
+                        <div className="content">
+                            <div className="meta">
+                                <span className="date">Current players:</span>
+                            </div>
+                            <br>
+                            </br>
+                        </div>
+                    </div>
                 </div>
-                <br></br>
-
-                </div>
-
-            </div>
-            </div>
             </Transition>
-            );
-        }
+        );
+    }
 }
 
 export default Players;
