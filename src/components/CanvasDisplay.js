@@ -164,7 +164,7 @@ class CanvasDisplay extends Component {
     return (
       <Transition visible={visible} duration={1000}>
       <div className="div2 ui small scale visible transition">
-          <div className="word"><i className="pencil alternate icon drawIcon"></i> {this.props.drawer} is Drawing</div>
+          <div className="word"><i className="pencil alternate icon drawIcon"></i> {this.props.drawer} is drawing...</div>
           <canvas
             className="canvas-display"
             id="canvas"
