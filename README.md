@@ -30,10 +30,12 @@ Live site is hosted at https://react-pictionary.herokuapp.com
 
  - Automatically assign the drawer to the next person in the game
  - Add a timer for each round
+ - Leaderboard 
+ - Display wins next to name in player list 
+ - Improve drawing tools (slider for brush size/clickable color picker)
  - ~~Display current players list~~
  - ~~Undo button~~
  - ~~Add more words~~
- - improve drawing tools (slider for brush size/clickable color picker)
 
 
 ### Technologies used:
