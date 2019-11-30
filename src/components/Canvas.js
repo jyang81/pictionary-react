@@ -96,9 +96,17 @@ class Canvas extends Component {
 
   handleMouseLeave = (ev) => {
     // console.log("mouse leave")
+    if (this.state.isDrawing === true) {
+      let p = this.state.paths
+    }
     this.setState({
       isDrawing: false
     })
+    this.paths.create(
+      p[p.length - 1].color,
+      p[p.length - 1].strokeWidth,
+      p[p.length - 1].coordinates
+    );
   }
 
   changeWidth = (ev) => {
@@ -233,11 +241,12 @@ class Canvas extends Component {
               className="ui selection dropdown width-4em"
               id="selWidth"
               onChange={this.changeWidth}>
-              <option value="1">1</option>
-              <option value="3">3</option>
-              <option value="5">5</option>
-              <option value="15">15</option>
-              <option value="50">50</option>
+              <option value="">Change</option>
+              <option value="1">Light</option>
+              <option value="3">Medium</option>
+              <option value="5">Bold</option>
+              <option value="15">Heavy</option>
+              <option value="50">Huge</option>
             </select>
             &nbsp;
           Color: <select
