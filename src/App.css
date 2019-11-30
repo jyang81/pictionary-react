@@ -111,9 +111,9 @@
 }
 
 .room-container {
-  border: 1.5px solid #dedede;
-  margin-top: 2em;
-  padding: 2em;
+  border: 1.2px solid #dedede;
+  margin-top: 1em;
+  padding: 1em;
   width: 250px;
   border-radius: 5px;
   overflow: auto;

@@ -4,10 +4,8 @@ import User from '../components/User'
 export default function CurrentPlayers(props) {
 
     return (
-      <div className="room-container">
-        <div>
+      <div className="room-container">      
           <h3>Current Players</h3>
-        </div>
         {props.users.map(user => {
           return <User key={user} user={user} />;
         })}
