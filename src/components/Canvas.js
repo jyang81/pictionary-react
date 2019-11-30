@@ -98,15 +98,15 @@ class Canvas extends Component {
     // console.log("mouse leave")
     if (this.state.isDrawing === true) {
       let p = this.state.paths
+      this.setState({
+        isDrawing: false
+      })
+      this.paths.create(
+        p[p.length - 1].color,
+        p[p.length - 1].strokeWidth,
+        p[p.length - 1].coordinates
+      );
     }
-    this.setState({
-      isDrawing: false
-    })
-    this.paths.create(
-      p[p.length - 1].color,
-      p[p.length - 1].strokeWidth,
-      p[p.length - 1].coordinates
-    );
   }
 
   changeWidth = (ev) => {
