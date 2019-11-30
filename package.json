@@ -5,7 +5,9 @@
   "dependencies": {
     "actioncable": "^5.2.3",
     "actioncable-client-react": "^1.0.3",
+    "diff": ">=3.5.0",
     "lodash": "^4.17.15",
+    "lodash.template": ">=4.5.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
@@ -14,7 +16,8 @@
     "react-transition-group": "^1.2.1",
     "semantic-ui": "^2.4.2",
     "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.87.1"
+    "semantic-ui-react": "^0.87.1",
+    "set-value": ">=2.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
