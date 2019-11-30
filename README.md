@@ -2,7 +2,7 @@
 
 React Pictionary is a realtime multiplayer drawing game. One person draws while other players guess. Once a player guesses the word correctly, they will be awarded a win, and the game will end. Currently, only one game can be in progress at a time, but everyone can join the game in progress.
 
-![Screenshot](/react-pictionary-screenshot.png)
+![Screenshot](/screenshot-winner-w.png)
 
 ### How to play:
 
@@ -18,7 +18,7 @@ React Pictionary is a realtime multiplayer drawing game. One person draws while 
 
 6. Guesses must be spelled correctly, but are not case-sensitive
 
-7. The game will end once a word is guessed correctly, and another user can have the chance to draw by clicking the "Create Game" button.
+7. The game will end once a word is guessed correctly, and another user can have the chance to draw by clicking the "Create Game" button. **Note: Currently, game will only end once the the word has been guessed correctly, even if all users log out.**
 
 8. This can continue until players decide to quit.
 
