@@ -204,25 +204,26 @@ class Canvas extends Component {
       });
   }
 
-  capitalizeTitle = () => {
-    const text = this.props.word
-    return text.toLowerCase()
-      .split(' ')
-      .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-      .join(' ');
-  }
+  // capitalizeTitle = () => {
+  //   const text = this.props.word
+  //   return text.toLowerCase()
+  //     .split(' ')
+  //     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+  //     .join(' ');
+  // }
 
-  renderWord = () => {
-    const title = this.capitalizeTitle()
-    return <Word word={title} />;
-  }
+  // renderWord = () => {
+  //   const title = this.capitalizeTitle()
+  //   return <Word word={title} />;
+  // }
 
   render() {
     const visible = this.state.visible
     return (
       <Transition visible={visible} duration={1000}>
         <div className="ui small scale visible transition">
-          {this.renderWord()}
+          {/* {this.renderWord()} */}
+          <Word word={this.props.word} />
           <canvas
             onMouseDown={this.handleMouseDown}
             onMouseMove={this.handleMouseMove}
