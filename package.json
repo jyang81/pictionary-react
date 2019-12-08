@@ -22,6 +22,7 @@
     "semantic-ui": "^2.4.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.87.3",
+    "serialize-javascript": "^2.1.1",
     "set-value": "^3.0.1"
   },
   "scripts": {
