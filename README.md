@@ -15,11 +15,11 @@ Live site is hosted at https://react-pictionary.herokuapp.com
 
 4. The drawer will get a random word and draw it until someone guesses correctly.
 
-5. Once, a correct guess has been made, the Host will announce the winner and that user will get a point, as well as the drawer.
+5. Once a correct guess has been made, the Host will announce the winner and that user will get a point, as well as the drawer.
 
 6. Guesses must be spelled correctly, but are not case-sensitive
 
-7. The game will end once a word is guessed correctly, and another user can have the chance to draw by clicking the "Create Game" button. *Note: Currently, game will only end once the the word has been guessed correctly, even if all users log out.*
+7. The game will end once a word is guessed correctly, and another user can have the chance to draw by clicking the "Create Game" button. *Note: Currently, game will only end once the word has been guessed correctly, even if all users log out.*
 
 8. This can continue until players decide to quit.
 
