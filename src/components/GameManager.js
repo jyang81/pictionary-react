@@ -15,7 +15,7 @@ class GameManager extends React.Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.createSocket()
         // console.log('manager mounted')
     }
