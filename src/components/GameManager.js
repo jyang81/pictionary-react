@@ -19,8 +19,8 @@ class GameManager extends React.Component {
         this.createSocket()
         // console.log('manager mounted')
     }
-
-    componentWillReceiveProps(nextProps) {
+    // ------ UPDATE THIS SOON! --------
+    UNSAFE_componentWillReceiveProps(nextProps) {
       if (nextProps.gameJoined === true && this.props.gameJoined !== nextProps.gameJoined) {
         this.handleGameJoin()
 //         console.log('call handleJoin')
