@@ -25,7 +25,6 @@ class Canvas extends Component {
   /////////////////////////// DRAWING FUNCTIONS //////////////////////////////////
 
   handleMouseDown = (ev) => {
-    // console.log("mouse down")
     this.setState({
       isDrawing: true,
       paths: [...this.state.paths, this.makePath()]
@@ -85,17 +84,14 @@ class Canvas extends Component {
   };
 
   handleMouseUp = (ev) => {
-    // console.log("mouse up")
     let p = this.state.paths
     this.setState({
       isDrawing: false
     })
-    // console.log(p[p.length - 1].color, p[p.length - 1].strokeWidth, p[p.length - 1].coordinates)
     this.paths.create(p[p.length - 1].color, p[p.length - 1].strokeWidth, p[p.length - 1].coordinates)
   }
 
   handleMouseLeave = (ev) => {
-    // console.log("mouse leave")
     if (this.state.isDrawing === true) {
       let p = this.state.paths
       this.setState({
@@ -110,14 +106,12 @@ class Canvas extends Component {
   }
 
   changeWidth = (ev) => {
-    console.log(ev.target.value)
     this.setState({
       curWidth: ev.target.value
     })
   }
 
   changeColor = (ev) => {
-    console.log(ev.target.value);
     this.setState({
       curColor: ev.target.value
     })
