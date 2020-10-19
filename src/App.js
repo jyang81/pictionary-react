@@ -192,7 +192,7 @@ class App extends React.Component {
     localStorage.setItem('jwt', jwt)
   }
 
-  getToken(jwt) {
+  getToken() {
     return localStorage.getItem('jwt')
   }
 
@@ -259,14 +259,14 @@ class App extends React.Component {
   renderLoginOrProfileAndRoom() {
     if (!localStorage.getItem('jwt'))  {
       return (
-        <><div></div>
-        <Login loginNewUser={this.loginNewUser}/>
-        </>
-      )
+        <div className="div2">
+          <Login loginNewUser={this.loginNewUser} />
+        </div>
+      );
     }
     else {
       return (
-        <div>
+        <div className="div1">
           <Profile
             username={this.state.username}
             gamesWon={this.state.gamesWon}

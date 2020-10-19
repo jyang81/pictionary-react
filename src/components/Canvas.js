@@ -16,7 +16,7 @@ class Canvas extends Component {
     this.state = {
       isDrawing: false,
       curWidth: 3,
-      curColor: "black",
+      curColor: '#000000',
       paths: [],
       visible: false
     }
@@ -110,14 +110,14 @@ class Canvas extends Component {
   }
 
   changeWidth = (ev) => {
-    // console.log(ev.target.value)
+    console.log(ev.target.value)
     this.setState({
       curWidth: ev.target.value
     })
   }
 
   changeColor = (ev) => {
-    // console.log(ev.target.value);
+    console.log(ev.target.value);
     this.setState({
       curColor: ev.target.value
     })
@@ -159,14 +159,12 @@ class Canvas extends Component {
     // console.log("cleared")
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    // ctx.canvas.width = ctx.canvas.width;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // this.props.clearClientCanvas()
   }
 
   componentWillMount() {
     this.createSocket()
-    // console.log('created socket')
   }
 
   componentDidMount() {
@@ -204,25 +202,11 @@ class Canvas extends Component {
       });
   }
 
-  // capitalizeTitle = () => {
-  //   const text = this.props.word
-  //   return text.toLowerCase()
-  //     .split(' ')
-  //     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-  //     .join(' ');
-  // }
-
-  // renderWord = () => {
-  //   const title = this.capitalizeTitle()
-  //   return <Word word={title} />;
-  // }
-
   render() {
     const visible = this.state.visible
     return (
       <Transition visible={visible} duration={1000}>
         <div className="ui small scale visible transition">
-          {/* {this.renderWord()} */}
           <Word word={this.props.word} />
           <canvas
             onMouseDown={this.handleMouseDown}
@@ -231,44 +215,49 @@ class Canvas extends Component {
             onMouseLeave={this.handleMouseLeave}
             id="canvas"
             width="600"
-            height="500">
-          </canvas>
+            height="500"
+          ></canvas>
           <br />
-          <div>
-            <button className="ui button" onClick={this.handleClear}>Clear Area</button>
-            <button className="ui button" onClick={this.undo}>Undo</button>
-            &nbsp;
-          Line width: <select
-              className="ui selection dropdown width-4em"
-              id="selWidth"
-              onChange={this.changeWidth}>
-              <option value="">Change</option>
-              <option value="1">Light</option>
-              <option value="3">Medium</option>
-              <option value="5">Bold</option>
-              <option value="15">Heavy</option>
-              <option value="50">Huge</option>
-            </select>
-            &nbsp;
-          Color: <select
-              className="ui selection dropdown width-4em"
-              id="selColor"
-              onChange={this.changeColor}>
-              <option value="black">black</option>
-              <option value="red">red</option>
-              <option value="orange">orange</option>
-              <option value="yellow">yellow</option>
-              <option value="green">green</option>
-              <option value="blue">blue</option>
-              <option value="purple">purple</option>
-              <option value="brown">brown</option>
-              <option value="gray">gray</option>
-              <option value="white">white</option>
-            </select>
+          <div className="controls">
+            <button className="ui button" onClick={this.handleClear}>
+              Clear Area
+            </button>
+
+            <button className="ui button" onClick={this.undo}>
+              Undo
+            </button>
+
+            <div className="controls">
+              <div className="label">Line Width:</div>
+              <div>
+                <input
+                  id="slider"
+                  type="range"
+                  name="width"
+                  min="1"
+                  max="50"
+                  value={this.state.curWidth}
+                  onChange={this.changeWidth}
+                ></input>
+              </div>
+            </div>
+
+            <div className="controls">
+              <div className="label">Color:</div>
+              <div>
+                <input
+                  id="selColor"
+                  type="color"
+                  name="selColor"
+                  value={this.state.curColor}
+                  onChange={this.changeColor}
+                ></input>
+              </div>
+            </div>
           </div>
         </div>
       </Transition>
-    )
+    );
   }
 
 }
