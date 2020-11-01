@@ -32,11 +32,14 @@ Live site is hosted at https://react-pictionary.herokuapp.com
  - Add a timer for each round
  - Leaderboard 
  - Display wins next to name in player list 
- - Improve drawing tools (slider for brush size/clickable color picker)
+ - ~~Improve drawing tools (slider for brush size/clickable color picker)~~
  - Add instructions to home page
  - ~~Display current players list~~
  - ~~Undo button~~
  - ~~Add more words~~
+ - Add 'skip word' option
+ - Add 'end game' button
+ - Make mobile friendly
 
 
 ### Technologies used:
@@ -63,4 +66,3 @@ Jon Langkammer  ([@ConditionalStatementLifestyle](https://github.com/Conditional
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-<a href="https://icons8.com/icon/20388/pencil-drawing">Pencil Drawing icon by Icons8</a>
